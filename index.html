@@ -205,6 +205,29 @@ const ALIAS = {"respiracion":"breath breathing respiration anapana","ecuanimidad
 const STOP = new Set(["a","and","como","con","de","del","el","en","how","i","is","la","las","los","me","of","para","por","que","quiero","sobre","the","to","un","una","what","y"]);
 const WA = "https://wa.me/34623393496";
 
+// Mismo patrón que OnYour move: lo pesado vive en MEISSON y sale por el funnel
+// compartido, por ruta (allí es /onyourmove-archivos). Como el funnel da HTTPS, la web
+// puede llamarlo sin que el navegador lo bloquee por mezclar http con https.
+// Si el servidor responde, el modelo elige la ficha y acierta mucho más; si no está,
+// se responde con las fichas que lleva esta misma página.
+const AGENTE = "https://homeai.tailf13d1b.ts.net/interior-agente";
+
+async function preguntarAlServidor(mensaje){
+  try {
+    const ctrl = new AbortController();
+    const reloj = setTimeout(() => ctrl.abort(), 25000);
+    const r = await fetch(AGENTE + "/api/chat", {
+      method: "POST", signal: ctrl.signal,
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({message: mensaje}),
+    });
+    clearTimeout(reloj);
+    if (!r.ok) return null;
+    const d = await r.json();
+    return (d && d.answer && !d.error) ? d.answer : null;
+  } catch (e) { return null; }   // sin servidor: se sigue con lo local
+}
+
 const nodo=(t,c,x)=>{const n=document.createElement(t); if(c)n.className=c; if(x!=null)n.textContent=x; return n;};
 
 // Misma normalizacion que words() de yoga_retrieval.py: si los temas de la ficha no se
@@ -240,12 +263,35 @@ function buscar(pregunta){
 const hilo = document.getElementById('hilo');
 const texto = document.getElementById('texto');
 
-function responder(pregunta){
+async function responder(pregunta){
   if (!pregunta) return;
   texto.value = '';
   const turno = nodo('div','turno');
   turno.appendChild(nodo('div','yo',pregunta));
   const caja = nodo('div','el');
+  caja.appendChild(nodo('p', null, 'Buscando\u2026'));
+  turno.appendChild(caja);
+  hilo.appendChild(turno);
+
+  // Primero el servidor de casa, que tiene el modelo; si no contesta, lo de aquí.
+  const delServidor = await preguntarAlServidor(pregunta);
+  caja.replaceChildren();
+  if (delServidor && !delServidor.startsWith('No tengo contenido verificado')) {
+    const SALTO = String.fromCharCode(10);
+    for (const bloque of delServidor.split(SALTO + SALTO)) {
+      const lineas = bloque.split(SALTO);
+      caja.appendChild(nodo('p', null, lineas[0]));
+      for (const extra of lineas.slice(1)) {
+        const auto = extra.includes('(verificaci\u00f3n autom\u00e1tica)');
+        const fu = nodo('span','fuente', extra.replace(' (verificaci\u00f3n autom\u00e1tica)',''));
+        if (auto) fu.appendChild(nodo('span','auto',' \u00b7 verificacion automatica'));
+        caja.appendChild(fu);
+      }
+    }
+    caja.scrollIntoView({behavior:'smooth', block:'nearest'});
+    return;
+  }
+
   const r = buscar(pregunta);
   if (!r.length) {
     const a = nodo('div','nada','No tengo ningun pasaje comprobado sobre eso, y prefiero decirlo a inventarme una respuesta. ');
@@ -263,8 +309,7 @@ function responder(pregunta){
       caja.appendChild(b);
     });
   }
-  turno.appendChild(caja);
-  hilo.appendChild(turno);
+  // El turno y la caja ya están puestos arriba, antes de preguntar al servidor.
   caja.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
