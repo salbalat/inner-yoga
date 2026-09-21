@@ -1,0 +1,13 @@
+{
+  "name": "Método Interior · Verónica Martínez",
+  "short_name": "Interior",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F1E6",
+  "theme_color": "#F5F1E6",
+  "icons": [
+    { "src": "assets/icono.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

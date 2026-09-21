@@ -10,6 +10,11 @@
 <meta property="og:image" content="assets/veronica-rio.jpg">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/icono.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icono.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Interior">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
   :root{--crema:#F5F1E6;--papel:#FFFDF8;--marino:#1F3D5C;--texto:#33414F;
     --suave:#6E7787;--linea:#DFD8C6;--oliva:#808F52;--petroleo:#3E7E91;--terracota:#C56A3E;}
@@ -50,6 +55,10 @@
   .cita{font-family:Georgia,serif;font-style:italic;font-size:clamp(19px,2.4vw,24px);
     color:var(--marino);text-align:center;margin:0;padding:8px 0}
   .lead{color:var(--suave);margin:0 0 18px}
+  .qr-caja{display:flex;flex-direction:column;align-items:center;gap:10px;
+    background:var(--papel);border:1px solid var(--linea);padding:22px;margin:0 0 18px}
+  .qr-caja svg{width:210px;height:210px;display:block;shape-rendering:crispEdges}
+  .qr-pie{font-size:12.5px;color:var(--suave);word-break:break-all;text-align:center}
   .chips{display:grid;gap:10px;margin-bottom:16px}
   @media(min-width:760px){.chips{grid-template-columns:1fr 1fr}}
   .chip{border:1px solid var(--linea);background:var(--papel);color:var(--texto);
@@ -179,6 +188,35 @@
       <button id="enviar">Preguntar</button>
     </div>
     <div id="hilo"></div>
+  </section>
+
+  <section id="llevatela">
+    <h2>Ll&eacute;vatela en el m&oacute;vil</h2>
+    <p class="lead">No hace falta descargar nada de ninguna tienda: apunta con la
+       c&aacute;mara del m&oacute;vil a este c&oacute;digo, y desde ah&iacute; la
+       a&ntilde;ades a la pantalla de inicio. Se abre como una app, tambi&eacute;n sin
+       cobertura.</p>
+    <div class="qr-caja">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37"><path stroke="#1f3d5c" d="M2 2.5h7m1 0h1m1 0h5m6 0h2m3 0h7m-33 1h1m5 0h1m1 0h3m2 0h2m1 0h2m4 0h1m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m2 0h6m1 0h3m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m2 0h3m4 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m8 0h2m1 0h1m4 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h2m2 0h3m6 0h1m1 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h2m3 0h1m8 0h1m-23 1h1m4 0h3m3 0h2m2 0h2m4 0h4m5 0h2m-33 1h3m1 0h1m2 0h1m1 0h1m2 0h5m1 0h2m2 0h2m4 0h3m-30 1h1m3 0h4m1 0h4m1 0h1m2 0h1m2 0h2m1 0h3m1 0h1m1 0h2m-31 1h3m3 0h1m1 0h1m1 0h1m1 0h2m1 0h1m3 0h1m1 0h10m-31 1h3m1 0h3m1 0h1m2 0h1m2 0h6m2 0h2m1 0h2m3 0h1m-32 1h1m4 0h1m3 0h1m4 0h1m7 0h2m2 0h2m1 0h1m1 0h2m-33 1h1m1 0h6m1 0h1m1 0h2m2 0h2m3 0h2m3 0h3m1 0h1m1 0h1m-31 1h1m1 0h1m1 0h1m1 0h2m4 0h3m1 0h1m1 0h1m4 0h2m1 0h2m1 0h1m1 0h1m-33 1h12m1 0h1m1 0h2m1 0h3m1 0h4m1 0h2m3 0h1m-33 1h2m1 0h1m4 0h3m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2m1 0h2m2 0h2m1 0h1m-31 1h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h2m2 0h1m2 0h3m1 0h2m1 0h2m1 0h1m-33 1h1m1 0h1m6 0h1m1 0h2m4 0h2m9 0h3m1 0h1m-33 1h7m4 0h1m1 0h4m2 0h1m2 0h4m2 0h2m1 0h2m-33 1h2m1 0h1m1 0h1m4 0h5m1 0h1m2 0h2m1 0h2m3 0h3m-30 1h1m5 0h4m1 0h1m1 0h2m2 0h1m3 0h2m6 0h1m1 0h1m-32 1h1m1 0h4m4 0h1m5 0h1m1 0h2m5 0h3m1 0h4m-33 1h2m2 0h1m1 0h4m2 0h4m1 0h4m1 0h1m1 0h6m1 0h1m-24 1h1m1 0h1m5 0h2m1 0h3m2 0h1m3 0h1m1 0h1m1 0h1m-33 1h7m1 0h1m2 0h3m4 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m-31 1h1m5 0h1m2 0h2m3 0h2m1 0h1m1 0h1m3 0h2m3 0h3m-31 1h1m1 0h3m1 0h1m3 0h1m2 0h5m2 0h1m1 0h1m1 0h6m-30 1h1m1 0h3m1 0h1m4 0h1m4 0h1m1 0h4m1 0h3m1 0h3m2 0h1m-33 1h1m1 0h3m1 0h1m2 0h2m3 0h1m3 0h2m3 0h3m1 0h2m1 0h3m-33 1h1m5 0h1m1 0h3m1 0h1m1 0h4m1 0h2m4 0h6m-31 1h7m4 0h1m1 0h1m3 0h1m1 0h1m2 0h1m1 0h4m3 0h1"/></svg>
+      <span class="qr-pie">https://salbalat.github.io/metodo-interior/</span>
+    </div>
+    <div class="rejilla">
+      <article class="pilar c-petroleo">
+        <h3>iPhone</h3>
+        <p class="detalle">En <b>Safari</b>: toca <b>Compartir</b> (el cuadrado con la flecha)
+           y luego <b>A&ntilde;adir a pantalla de inicio</b>.</p>
+      </article>
+      <article class="pilar c-oliva">
+        <h3>Android</h3>
+        <p class="detalle">En <b>Chrome</b>: men&uacute; de los tres puntos y
+           <b>A&ntilde;adir a pantalla de inicio</b> (o <b>Instalar aplicaci&oacute;n</b>).</p>
+      </article>
+      <article class="pilar c-terracota">
+        <h3>Ordenador</h3>
+        <p class="detalle">D&eacute;jala en marcadores: funciona igual en cualquier
+           navegador, sin instalar nada.</p>
+      </article>
+    </div>
   </section>
 
   <section>
