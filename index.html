@@ -134,6 +134,8 @@
   .campo input:focus{outline:none;border-color:var(--petroleo)}
   .campo button{padding:15px 30px;border:0;background:var(--marino);color:#fff;
     font:17px "EB Garamond",Georgia,serif;letter-spacing:.04em;cursor:pointer}
+  .aviso{font-size:15px;color:var(--suave);margin:0 0 24px;padding-left:14px;
+    border-left:2px solid var(--linea);line-height:1.6}
   .turno{margin-bottom:24px}
   .yo{background:var(--marino);color:#fff;padding:13px 17px;max-width:80%;margin-left:auto;font-size:17px}
   .el{background:var(--papel);border:1px solid var(--linea);padding:19px 21px;margin-top:12px}
@@ -293,63 +295,26 @@
       </article></div>
   </section>
 
-  <section id="fichas">
-    <h2>Detr&aacute;s de las respuestas</h2>
-    <div class="filete"></div>
-    <p class="lead">Esta p&aacute;gina responde preguntas sobre la pr&aacute;ctica, pero no
-       improvisa: cada respuesta se prepar&oacute; de una en una a partir de un libro, y se
-       comprob&oacute; contra el pasaje original antes de entrar aqu&iacute;.</p>
-    <div class="cifras">
-      <div class="cifra"><b>639</b><span>respuestas preparadas</span></div>
-      <div class="cifra"><b>16</b><span>libros y fuentes</span></div>
-      <div class="cifra"><b>3</b><span>filtros antes de entrar</span></div>
-    </div>
-    <div class="pasos">
-      <article class="paso">
-        <h3>Se propone</h3>
-        <p>Un programa lee un pasaje del libro y redacta una posible respuesta, se&ntilde;alando
-           la frase exacta que la sostiene.</p>
-      </article>
-      <article class="paso">
-        <h3>Se comprueba en el libro</h3>
-        <p>Aqu&iacute; no opina nadie: la frase se busca en el original letra por letra. Si no
-           aparece tal cual, la respuesta se descarta.</p>
-      </article>
-      <article class="paso">
-        <h3>Se revisa</h3>
-        <p>Un segundo programa distinto lee las dos y decide si el pasaje sostiene de verdad
-           la respuesta, o si se ha estirado el sentido.</p>
-      </article>
-    </div>
-    <div class="promesas">
-      <p class="promesa"><svg class="tic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg>
-        <span><b>No se inventa nada.</b> Si ninguna ficha responde, lo dice y te env&iacute;a a
-        hablar con Ver&oacute;nica.</span></p>
-      <p class="promesa"><svg class="tic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg>
-        <span><b>Cada respuesta lleva su fuente</b> y la p&aacute;gina de donde sale, para que
-        puedas comprobarla.</span></p>
-      <p class="promesa"><svg class="tic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg>
-        <span><b>No sustituye una clase</b> ni da consejo m&eacute;dico: ante dolor, lesi&oacute;n
-        o embarazo, te remite a ella.</span></p>
-      <p class="promesa"><svg class="tic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></svg>
-        <span><b>El m&eacute;todo manda.</b> Cuando la pregunta toca algo del m&eacute;todo de
-        Ver&oacute;nica, responde con sus palabras antes que con las de ning&uacute;n libro.</span></p>
-    </div>
-  </section>
-
   <section id="preguntar">
-    <h2>Pregunta sobre tu pr&aacute;ctica</h2>
+    <h2>Tu asistente de yoga</h2>
+    <p class="cursiva">Pregunta lo que necesites sobre tu pr&aacute;ctica.</p>
     <div class="filete"></div>
     <div class="chips">
-      <button class="chip">&iquest;C&oacute;mo se practica el pranayama?</button>
+      <button class="chip">&iquest;Por d&oacute;nde empiezo si no he hecho yoga nunca?</button>
       <button class="chip">&iquest;Qu&eacute; es la meditaci&oacute;n vipassana?</button>
-      <button class="chip">&iquest;El yoga ayuda con el dolor lumbar?</button>
-      <button class="chip">&iquest;Es seguro hacer yoga en el embarazo?</button>
+      <button class="chip">&iquest;C&oacute;mo se practica el pranayama?</button>
+      <button class="chip">Me cuesta dormir, &iquest;qu&eacute; me ayuda?</button>
+      <button class="chip">&iquest;Hay que ser flexible para empezar?</button>
+      <button class="chip">&iquest;Qu&eacute; es Ingenier&iacute;a Interior?</button>
     </div>
     <div class="campo">
       <input id="texto" type="text" placeholder="Escribe tu pregunta" autocomplete="off">
       <button id="enviar">Preguntar</button>
     </div>
+    <p class="aviso">Responde con pasajes de libros comprobados uno a uno y con el
+       m&eacute;todo de Ver&oacute;nica. Cuando no lo sabe, lo dice. Si hay dolor,
+       lesi&oacute;n o embarazo, te manda a hablar con ella: esto no sustituye una clase
+       ni es consejo m&eacute;dico.</p>
     <div id="hilo"></div>
   </section>
 
@@ -420,7 +385,7 @@ async function preguntarAlServidor(mensaje){
   try {
     const ctrl = new AbortController();
     const reloj = setTimeout(() => ctrl.abort(), 25000);
-    const r = await fetch(AGENTE + "/api/chat", {
+    const r = await fetch(AGENTE + "/api/publico", {
       method: "POST", signal: ctrl.signal,
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({message: mensaje}),
