@@ -187,7 +187,7 @@
       const local = (typeof buscar === 'function') ? buscar(pregunta) : [];
       texto = local.length
         ? local.map(f => f.a).join(' ')
-        : 'No tengo ningún pasaje comprobado sobre eso, y prefiero decirlo a inventarme una respuesta.';
+        : 'De esto no tengo aún pasaje comprobado. Lo consultaré con Verónica.';
     }
     suya.textContent = texto;
 
