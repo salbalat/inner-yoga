@@ -10,13 +10,11 @@
   const hilo = document.getElementById('hablar-hilo');
   const anillos = [...document.querySelectorAll('#hablar-zona .anillo')];
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 
   let audioCtx = null, analizador = null, datos = null, micro = null;
   let animando = false, t0 = 0;
   let bandas = [0, 0, 0];          // graves, medios, agudos: cuerpo, respiracion, mente
   let fase = 'quieto';             // quieto | escuchando | pensando | hablando
-  let reconocedor = null, dicho = '';
   let sonando = null;
 
   // ---- la figura -----------------------------------------------------------
@@ -78,11 +76,17 @@
   function pararPintura(){ animando = false; }
 
   // ---- escuchar ------------------------------------------------------------
+  // NO se usa el reconocimiento del navegador. En iOS tiene un fallo conocido: tras
+  // reproducir audio, el microfono se queda bloqueado y no vuelve a reconocer. Y aqui
+  // ella habla antes de escuchar, asi que caiamos justo en ese caso. Se graba el audio
+  // y lo transcribe el servidor: igual de bien en cualquier navegador.
+  let grabadora = null, trozos = [], flujo = null;
+
   async function abrirMicro(){
-    if (audioCtx) return true;
+    if (flujo) return true;
     try {
+      flujo = await navigator.mediaDevices.getUserMedia({audio: true});
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const flujo = await navigator.mediaDevices.getUserMedia({audio: true});
       micro = audioCtx.createMediaStreamSource(flujo);
       analizador = audioCtx.createAnalyser();
       analizador.fftSize = 512;
@@ -104,40 +108,54 @@
 
   async function escuchar(){
     if (fase === 'escuchando'){ pararEscucha(); return; }
-    if (!SR){
-      estado.textContent = 'Tu navegador no sabe dictar. Escríbele más abajo.';
-      return;
-    }
-    if (sonando){ sonando.pause(); sonando = null; }
+    if (fase === 'pensando') return;
+    if (sonando){ sonando.pause(); sonando = null; }      // que no se oiga a si misma
     if (!await abrirMicro()) return;
     if (audioCtx.state === 'suspended') await audioCtx.resume();
     arrancarPintura();
 
-    dicho = '';
-    reconocedor = new SR();
-    reconocedor.lang = 'es-ES';
-    reconocedor.continuous = false;
-    reconocedor.interimResults = true;
-    reconocedor.onstart = () => poner('escuchando', 'Te escucho…');
-    reconocedor.onresult = ev => {
-      let parcial = '';
-      for (let i = ev.resultIndex; i < ev.results.length; i++){
-        const trozo = ev.results[i][0].transcript;
-        if (ev.results[i].isFinal) dicho += trozo; else parcial += trozo;
+    trozos = [];
+    let tipo = 'audio/webm';
+    if (window.MediaRecorder && !MediaRecorder.isTypeSupported(tipo)) tipo = 'audio/mp4';
+    try {
+      grabadora = new MediaRecorder(flujo, {mimeType: tipo});
+    } catch (e) {
+      try { grabadora = new MediaRecorder(flujo); } catch (e2) {
+        poner('quieto', 'Este navegador no sabe grabar. Escríbele más abajo.');
+        return;
       }
-      estado.textContent = (dicho + parcial) || 'Te escucho…';
-    };
-    reconocedor.onerror = () => poner('quieto', 'No te he entendido. Prueba otra vez.');
-    reconocedor.onend = () => {
-      const pregunta = dicho.trim();
-      if (!pregunta){ poner('quieto', 'No he cogido nada. Toca y habla.'); return; }
-      responderHablando(pregunta);
-    };
-    try { reconocedor.start(); } catch (e) {}
+    }
+    grabadora.ondataavailable = ev => { if (ev.data && ev.data.size) trozos.push(ev.data); };
+    grabadora.onstop = enviarGrabacion;
+    grabadora.start();
+    poner('escuchando', 'Te escucho… toca otra vez cuando acabes.');
+
+    // Por si se olvida de parar: un minuto es de sobra para una pregunta.
+    setTimeout(() => { if (fase === 'escuchando') pararEscucha(); }, 60000);
   }
 
   function pararEscucha(){
-    try { reconocedor && reconocedor.stop(); } catch (e) {}
+    try { grabadora && grabadora.state === 'recording' && grabadora.stop(); } catch (e) {}
+  }
+
+  async function enviarGrabacion(){
+    const audio = new Blob(trozos, {type: (grabadora && grabadora.mimeType) || 'audio/webm'});
+    if (!audio.size){ poner('quieto', 'No he cogido nada. Toca y habla.'); return; }
+    poner('pensando', 'Un momento…');
+    try {
+      const r = await fetch(AGENTE + '/api/dictar', {
+        method: 'POST',
+        headers: {'Content-Type': audio.type || 'audio/webm'},
+        body: audio,
+      });
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      const pregunta = (d.texto || '').trim();
+      if (!pregunta){ poner('quieto', 'No te he entendido. Prueba otra vez.'); return; }
+      responderHablando(pregunta);
+    } catch (e) {
+      poner('quieto', 'No he podido entender el audio. Prueba otra vez o escríbele.');
+    }
   }
 
   // ---- contestar -----------------------------------------------------------
