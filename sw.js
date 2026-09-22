@@ -1,6 +1,6 @@
 
 'use strict';
-const VERSION = 'ii-5b7cde45389a';
+const VERSION = 'ii-a5bea39d22e7';
 const ESENCIALES = ['./', './index.html', './postura.js', './manifest.webmanifest',
                     './assets/veronica-rio.jpg', './assets/icono.png'];
 
@@ -22,6 +22,8 @@ self.addEventListener('activate', ev => {
 self.addEventListener('fetch', ev => {
   const req = ev.request;
   if (req.method !== 'GET') return;
+  // Lo de fuera (Spotify, el modelo de postura) pasa de largo sin tocarlo.
+  if (new URL(req.url).origin !== location.origin) return;
   // La página: primero la red, para que una actualización se vea al abrirla.
   if (req.mode === 'navigate' || (req.destination === 'document')) {
     ev.respondWith((async () => {

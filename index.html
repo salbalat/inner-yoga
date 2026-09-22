@@ -151,8 +151,29 @@
     font-size:13.5px;color:var(--suave);line-height:1.55}
   .auto{color:var(--terracota)}
   .otra{margin-top:16px;padding-top:16px;border-top:1px solid var(--linea-fina)}
+  .sin-fuente{background:#F7EFDC;border:1px solid #E3D3AB;color:#6A5526;
+    padding:11px 14px;margin:0 0 13px;font-size:14.5px;line-height:1.5}
   .nada{background:#F7EFDC;border:1px solid #E3D3AB;padding:16px 18px;color:#6A5526;font-size:16.5px}
   .nada a{color:var(--terracota);font-weight:600}
+
+  /* ---- la secuencia ---- */
+  .grupos{display:flex;flex-direction:column;gap:26px}
+  .grupo header{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;
+    border-bottom:1px solid var(--linea);padding-bottom:7px;margin-bottom:13px}
+  .grupo h3{font-size:21px;color:var(--marino);text-transform:uppercase;
+    letter-spacing:.07em;margin:0}
+  .grupo-sub{font-family:"Cormorant Garamond",serif;font-style:italic;
+    color:var(--suave);font-size:16px}
+  .asanas{display:flex;flex-wrap:wrap;gap:9px}
+  .asana{background:var(--papel);border:1px solid var(--linea-fina);
+    border-left:3px solid var(--linea);padding:9px 14px;cursor:pointer;
+    font:16px "EB Garamond",Georgia,serif;color:var(--texto);text-align:left;
+    transition:border-color .15s,background .15s}
+  .asana:hover{background:#fff;border-color:var(--marino)}
+  .asana i{color:var(--suave);font-size:13.5px}
+  .c-borde-oliva{border-left-color:var(--oliva)}
+  .c-borde-petroleo{border-left-color:var(--petroleo)}
+  .c-borde-terracota{border-left-color:var(--terracota)}
 
   /* ---- tu postura ---- */
   .postura-mandos{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 12px}
@@ -177,6 +198,12 @@
   .lectura b{color:var(--marino);font-size:17px}
   .grados{font-size:14.5px;color:var(--suave);font-variant-numeric:tabular-nums}
   .lectura p{margin:7px 0 0;font-size:16px}
+
+  /* ---- musica ---- */
+  .disco-caja{background:var(--papel);border:1px solid var(--linea);padding:14px;margin:0 0 12px}
+  .disco-caja iframe{display:block;border:0;border-radius:2px}
+  .detalle-musica{font-size:15px;color:var(--suave);margin:0}
+  .detalle-musica a{color:var(--petroleo)}
 
   /* ---- llevatela ---- */
   .qr-caja{display:flex;flex-direction:column;align-items:center;gap:12px;
@@ -208,6 +235,21 @@
   .punto{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;flex:0 0 auto}
   .punto svg{width:19px;height:19px}
   .wa{background:var(--oliva)} .mail{background:var(--petroleo)}
+  /* ---- boton de musica ---- */
+  #musica-boton{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;
+    align-items:center;gap:9px;background:var(--marino);color:#fff;border:0;
+    padding:13px 19px;border-radius:999px;cursor:pointer;
+    font:16px "EB Garamond",Georgia,serif;letter-spacing:.03em;
+    box-shadow:0 4px 18px -6px rgba(27,58,92,.6)}
+  #musica-boton svg{width:19px;height:19px}
+  #musica-boton.sonando{background:var(--terracota)}
+  #musica-panel{position:fixed;right:16px;bottom:74px;z-index:39;width:min(380px,calc(100vw - 32px));
+    background:var(--papel);border:1px solid var(--linea);padding:10px;
+    box-shadow:0 10px 34px -12px rgba(27,58,92,.45)}
+  #musica-panel iframe{display:block;border:0;width:100%;height:352px}
+  #musica-panel[hidden]{display:none}
+  @media(max-width:520px){#musica-boton{right:12px;bottom:12px;padding:12px 16px}}
+
   footer{text-align:center;font-size:12px;letter-spacing:.24em;text-transform:uppercase;
     color:var(--suave);padding:38px 22px 52px;line-height:2.3;
     border-top:1px solid var(--linea)}
@@ -349,6 +391,84 @@
     <div id="hilo"></div>
   </section>
 
+  <section id="secuencia">
+    <h2>La secuencia</h2>
+    <p class="cursiva">Las 67 asanas del Hatha Yoga, por grupos.</p>
+    <div class="filete"></div>
+    <p class="lead">Toca cualquiera y el asistente te cuenta lo que dicen los textos
+       sobre ella. Si de alguna no tiene nada comprobado, te lo dir&aacute;.</p>
+    <div class="grupos">
+      <article class="grupo">
+        <header>
+          <h3>Surya Namaskara</h3>
+          <span class="grupo-sub">Saludo al sol</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-terracota" data-asana="Pranamasana">Pranamasana</button><button class="asana c-borde-terracota" data-asana="Hasta Utthanasana">Hasta Utthanasana</button><button class="asana c-borde-terracota" data-asana="Padahastasana">Padahastasana</button><button class="asana c-borde-terracota" data-asana="Ashwa Sanchalanasana">Ashwa Sanchalanasana</button><button class="asana c-borde-terracota" data-asana="Parvatasana">Parvatasana</button><button class="asana c-borde-terracota" data-asana="Ashtanga Namaskara">Ashtanga Namaskara</button><button class="asana c-borde-terracota" data-asana="Bhujangasana">Bhujangasana</button><button class="asana c-borde-terracota" data-asana="Parvatasana">Parvatasana</button><button class="asana c-borde-terracota" data-asana="Ashwa Sanchalanasana">Ashwa Sanchalanasana</button><button class="asana c-borde-terracota" data-asana="Padahastasana">Padahastasana</button><button class="asana c-borde-terracota" data-asana="Hasta Utthanasana">Hasta Utthanasana</button><button class="asana c-borde-terracota" data-asana="Pranamasana">Pranamasana</button>
+        </div>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>De pie</h3>
+          <span class="grupo-sub">Standing asana</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-oliva" data-asana="Tadasana">Tadasana<i> · en el póster sale «Tdasana», errata de imprenta</i></button><button class="asana c-borde-oliva" data-asana="Tiryaka Tadasana">Tiryaka Tadasana</button><button class="asana c-borde-oliva" data-asana="Trikonasana">Trikonasana</button><button class="asana c-borde-oliva" data-asana="Parsva Uttanasana">Parsva Uttanasana</button><button class="asana c-borde-oliva" data-asana="Sirsha Angustha Yogasana">Sirsha Angustha Yogasana</button><button class="asana c-borde-oliva" data-asana="Hasta Utthanasana A">Hasta Utthanasana A</button><button class="asana c-borde-oliva" data-asana="Hasta Utthanasana B">Hasta Utthanasana B</button><button class="asana c-borde-oliva" data-asana="Parivritta Trikonasana">Parivritta Trikonasana</button><button class="asana c-borde-oliva" data-asana="Ekapada Pranamasana">Ekapada Pranamasana</button><button class="asana c-borde-oliva" data-asana="Druta Utkatasana">Druta Utkatasana</button>
+        </div>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>De rodillas</h3>
+          <span class="grupo-sub">Kneeling asana</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-petroleo" data-asana="Simha Garjanasana">Simha Garjanasana</button><button class="asana c-borde-petroleo" data-asana="Veerasana">Veerasana</button><button class="asana c-borde-petroleo" data-asana="Parighasana">Parighasana</button><button class="asana c-borde-petroleo" data-asana="Marjariasana A">Marjariasana A</button><button class="asana c-borde-petroleo" data-asana="Marjariasana B">Marjariasana B</button><button class="asana c-borde-petroleo" data-asana="Ustrasana">Ustrasana</button><button class="asana c-borde-petroleo" data-asana="Balasana">Balasana</button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana A">Tiryaka Marjariasana A</button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana B">Tiryaka Marjariasana B</button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana C">Tiryaka Marjariasana C</button>
+        </div>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Sentadas</h3>
+          <span class="grupo-sub">Sitting asana</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-terracota" data-asana="Dandasana">Dandasana</button><button class="asana c-borde-terracota" data-asana="Flexión lateral sentada">Flexión lateral sentada<i> · en el póster, «sitting side banding»</i></button><button class="asana c-borde-terracota" data-asana="Gomukhasana">Gomukhasana</button><button class="asana c-borde-terracota" data-asana="Paschimottanasana">Paschimottanasana</button><button class="asana c-borde-terracota" data-asana="Matsyasana">Matsyasana</button><button class="asana c-borde-terracota" data-asana="Bhu Namanasana">Bhu Namanasana</button><button class="asana c-borde-terracota" data-asana="Ardha Matsyendrasana">Ardha Matsyendrasana</button><button class="asana c-borde-terracota" data-asana="Baddha Konasana A">Baddha Konasana A</button><button class="asana c-borde-terracota" data-asana="Baddha Konasana B">Baddha Konasana B</button><button class="asana c-borde-terracota" data-asana="Merudandasana">Merudandasana</button>
+        </div>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Boca abajo</h3>
+          <span class="grupo-sub">Asana in prone position</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-oliva" data-asana="Makarasana">Makarasana</button><button class="asana c-borde-oliva" data-asana="Bhujangasana">Bhujangasana</button><button class="asana c-borde-oliva" data-asana="Shashankasana">Shashankasana</button><button class="asana c-borde-oliva" data-asana="Ardha Shalabhasana">Ardha Shalabhasana</button><button class="asana c-borde-oliva" data-asana="Poorna Shalabhasana">Poorna Shalabhasana</button><button class="asana c-borde-oliva" data-asana="Tiryaka Bhujangasana A">Tiryaka Bhujangasana A</button><button class="asana c-borde-oliva" data-asana="Tiryaka Bhujangasana B">Tiryaka Bhujangasana B</button><button class="asana c-borde-oliva" data-asana="Santolanasana">Santolanasana</button><button class="asana c-borde-oliva" data-asana="Chaturanga Dandasana">Chaturanga Dandasana</button>
+        </div>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Boca arriba</h3>
+          <span class="grupo-sub">Asana in supine position</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-petroleo" data-asana="Padotthanasana">Padotthanasana</button><button class="asana c-borde-petroleo" data-asana="Supta Pawanmuktasana A">Supta Pawanmuktasana A</button><button class="asana c-borde-petroleo" data-asana="Supta Pawanmuktasana B">Supta Pawanmuktasana B</button><button class="asana c-borde-petroleo" data-asana="Kandharasana">Kandharasana</button><button class="asana c-borde-petroleo" data-asana="Supta Vajrasana">Supta Vajrasana</button><button class="asana c-borde-petroleo" data-asana="Supta Balasana">Supta Balasana</button><button class="asana c-borde-petroleo" data-asana="Udarakarshanasana">Udarakarshanasana</button><button class="asana c-borde-petroleo" data-asana="Naukasana A">Naukasana A</button><button class="asana c-borde-petroleo" data-asana="Naukasana B">Naukasana B</button>
+        </div>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Invertidas</h3>
+          <span class="grupo-sub">Inverted asana</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-terracota" data-asana="Viparita Karani">Viparita Karani</button><button class="asana c-borde-terracota" data-asana="Salamba Sarvangasana">Salamba Sarvangasana</button><button class="asana c-borde-terracota" data-asana="Halasana">Halasana</button><button class="asana c-borde-terracota" data-asana="Tiryaka Halasana">Tiryaka Halasana</button><button class="asana c-borde-terracota" data-asana="Chakrasana">Chakrasana</button><button class="asana c-borde-terracota" data-asana="Salamba Sirshasana">Salamba Sirshasana</button><button class="asana c-borde-terracota" data-asana="Balasana">Balasana</button>
+        </div>
+      </article></div>
+  </section>
+
   <section id="postura">
     <h2>Tu postura</h2>
     <p class="cursiva">Haz una foto y mira los &aacute;ngulos.</p>
@@ -367,6 +487,21 @@
     <p id="postura-estado" class="estado" role="status" aria-live="polite"></p>
     <canvas id="postura-lienzo" hidden></canvas>
     <div id="postura-salida"></div>
+  </section>
+
+  <section id="musica">
+    <h2>M&uacute;sica para practicar</h2>
+    <p class="cursiva">Lo que suena en clase.</p>
+    <div class="filete"></div>
+    <div class="disco-caja">
+      <iframe src="https://open.spotify.com/embed/album/47SrUL3swU3EI5icSpEIXI?utm_source=generator"
+              width="100%" height="380" frameborder="0" loading="lazy"
+              title="Songs from Grace en Spotify"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <p class="detalle-musica">Si no se ve el reproductor,
+       <a href="https://open.spotify.com/album/47SrUL3swU3EI5icSpEIXI" target="_blank"
+          rel="noopener">&aacute;brelo en Spotify</a>.</p>
   </section>
 
   <section id="llevatela">
@@ -416,6 +551,13 @@
   </section>
 </div>
 
+<button id="musica-boton" type="button" aria-expanded="false"
+        aria-controls="musica-panel" title="Poner la música de clase">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3 9 5.2v9.3a3.4 3.4 0 1 0 1.8 3V8.4l7.4-1.5v5.4a3.4 3.4 0 1 0 1.8 3V3Z"/></svg>
+  <span>M&uacute;sica</span>
+</button>
+<div id="musica-panel" hidden></div>
+
 <footer>Hatha Yoga · Vinyasa · Pranayama · Meditación<br>Ingeniería Interior &middot; Verónica Martínez</footer>
 
 <script>
@@ -444,7 +586,9 @@ async function preguntarAlServidor(mensaje){
     clearTimeout(reloj);
     if (!r.ok) return null;
     const d = await r.json();
-    return (d && d.answer && !d.error) ? d.answer : null;
+    if (!d || !d.answer || d.error) return null;
+    // Si no trae fuentes, no sale de ningun libro: se avisa en la respuesta.
+    return {texto: d.answer, conFuente: Array.isArray(d.sources) && d.sources.length > 0};
   } catch (e) { return null; }   // sin servidor: se sigue con lo local
 }
 
@@ -497,11 +641,16 @@ async function responder(pregunta){
   hilo.appendChild(turno);
 
   // Primero el servidor de casa, que tiene el modelo; si no contesta, lo de aquí.
-  const delServidor = await preguntarAlServidor(pregunta);
+  const respuesta = await preguntarAlServidor(pregunta);
   caja.replaceChildren();
-  if (delServidor && !delServidor.startsWith('No tengo contenido verificado')) {
+  if (respuesta && !respuesta.texto.startsWith('No tengo contenido verificado')) {
+    if (!respuesta.conFuente) {
+      caja.appendChild(nodo('div','sin-fuente',
+        'Orientacion general: esto NO sale de ningun libro comprobado. '
+        + 'Para tu caso, preguntale a Veronica.'));
+    }
     const SALTO = String.fromCharCode(10);
-    for (const bloque of delServidor.split(SALTO + SALTO)) {
+    for (const bloque of respuesta.texto.split(SALTO + SALTO)) {
       const lineas = bloque.split(SALTO);
       caja.appendChild(nodo('p', null, lineas[0]));
       for (const extra of lineas.slice(1)) {
@@ -542,6 +691,41 @@ if ('serviceWorker' in navigator) {
 }
 
 document.querySelectorAll('.chip').forEach(c => c.onclick = () => responder(c.textContent));
+
+// La musica. No puede arrancar sola: los navegadores (y iOS el primero) no dejan sonar
+// nada mientras la persona no haya tocado la pantalla. Asi que el boton esta siempre a
+// la vista y con un toque suena. Se recuerda si lo dejo abierto.
+const botonMusica = document.getElementById('musica-boton');
+const panelMusica = document.getElementById('musica-panel');
+const ALBUM = 'https://open.spotify.com/embed/album/47SrUL3swU3EI5icSpEIXI?utm_source=generator&autoplay=1';
+
+function ponerMusica(abrir){
+  if (abrir && !panelMusica.firstChild) {
+    const marco = document.createElement('iframe');
+    marco.src = ALBUM;
+    marco.title = 'Música de clase';
+    marco.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+    marco.loading = 'lazy';
+    panelMusica.appendChild(marco);
+  }
+  panelMusica.hidden = !abrir;
+  botonMusica.setAttribute('aria-expanded', String(abrir));
+  botonMusica.classList.toggle('sonando', abrir);
+  try { localStorage.setItem('musica', abrir ? '1' : '0'); } catch (e) {}
+}
+
+botonMusica.addEventListener('click', () => ponerMusica(panelMusica.hidden));
+
+// Si la ultima vez la dejo puesta, se le deja el panel abierto y listo para sonar
+// en cuanto toque: no se puede hacer sonar sin que toque, pero si dejarselo a mano.
+try { if (localStorage.getItem('musica') === '1') ponerMusica(true); } catch (e) {}
+
+// Las asanas de la secuencia preguntan al asistente, que esta mas arriba en la pagina.
+document.querySelectorAll('.asana').forEach(b => b.onclick = () => {
+  const nombre = b.dataset.asana;
+  document.getElementById('preguntar').scrollIntoView({behavior:'smooth', block:'start'});
+  responder('¿Qué es ' + nombre + '?');
+});
 document.getElementById('enviar').onclick = () => responder(texto.value.trim());
 texto.addEventListener('keydown', ev => { if (ev.key === 'Enter') responder(texto.value.trim()); });
 </script>
