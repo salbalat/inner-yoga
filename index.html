@@ -536,6 +536,11 @@ async function responder(pregunta){
   caja.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
+// La app instalada desde el QR se actualiza sola al abrirla si hay cobertura.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+
 document.querySelectorAll('.chip').forEach(c => c.onclick = () => responder(c.textContent));
 document.getElementById('enviar').onclick = () => responder(texto.value.trim());
 texto.addEventListener('keydown', ev => { if (ev.key === 'Enter') responder(texto.value.trim()); });

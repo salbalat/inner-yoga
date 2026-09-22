@@ -1,13 +1,19 @@
 {
-  "name": "Método Interior · Verónica Martínez",
-  "short_name": "Interior",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#F5F1E6",
-  "theme_color": "#F5F1E6",
-  "icons": [
-    { "src": "assets/icono.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
-  ]
+ "name": "Ingeniería Interior · Verónica Martínez",
+ "short_name": "Ingeniería Interior",
+ "description": "Un método personalizado para conocerte, cuidarte y evolucionar a tu ritmo.",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#F4F0E6",
+ "theme_color": "#1B3A5C",
+ "icons": [
+  {
+   "src": "assets/icono.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
 }
