@@ -377,12 +377,34 @@
     letter-spacing:.07em;margin:0}
   .grupo-sub{font-family:"Cormorant Garamond",serif;font-style:italic;
     color:var(--suave);font-size:16px}
+  .grupo-cuenta{margin-left:auto;font-size:13px;color:var(--suave);
+    font-variant-numeric:tabular-nums;letter-spacing:.06em}
+  .grupo-nota{margin:11px 0 0;font-size:14.5px;color:var(--suave);font-style:italic;
+    padding-left:12px;border-left:1px solid var(--linea)}
+
   .asanas{display:flex;flex-wrap:wrap;gap:9px}
-  .asana{background:var(--papel);border:1px solid var(--linea-fina);
-    border-left:3px solid var(--linea);padding:9px 14px;cursor:pointer;
-    font:16px "EB Garamond",Georgia,serif;color:var(--texto);text-align:left;
-    transition:border-color .15s,background .15s}
+  /* El saludo al sol en rejilla: se lee como el recorrido que es, no como un montón. */
+  .asanas.es-secuencia{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+
+  .asana{display:flex;align-items:baseline;gap:9px;background:var(--papel);
+    border:1px solid var(--linea-fina);border-left:3px solid var(--linea);
+    padding:10px 14px;cursor:pointer;color:var(--texto);text-align:left;
+    transition:border-color var(--t-estado) var(--e-suave),
+               background var(--t-estado) var(--e-suave),
+               transform var(--t-toque) var(--e-suave)}
+  .asana-nombre{font:16.5px "EB Garamond",Georgia,serif;letter-spacing:.01em}
+  .asana-num{font-family:"Cormorant Garamond",serif;font-size:15px;color:var(--suave);
+    font-variant-numeric:tabular-nums;min-width:1.1em;text-align:right}
+  .asana.es-vuelta .asana-num{color:var(--terracota);opacity:.75}
   .asana:hover{background:#fff;border-color:var(--marino)}
+  .asana:active{transform:scale(.985)}
+  .asana:focus-visible{outline:2px solid var(--petroleo);outline-offset:2px}
+  /* La que se está consultando: no se pierde de vista al saltar a Preguntar. */
+  .asana[aria-current="true"]{background:#fff;border-left-color:var(--petroleo);
+    box-shadow:inset 0 0 0 1px var(--petroleo)}
+  /* Lo que el buscador SI sabe responder, marcado antes de tocarlo. */
+  .asana[data-hay="si"] .asana-nombre{color:var(--marino)}
+  .asana[data-hay="si"]{border-left-color:var(--oliva)}
   .asana i{color:var(--suave);font-size:13.5px}
   .c-borde-oliva{border-left-color:var(--oliva)}
   .c-borde-petroleo{border-left-color:var(--petroleo)}
@@ -670,79 +692,91 @@
     <h2>La secuencia</h2>
     <p class="cursiva">Las 67 asanas del Hatha Yoga, por grupos.</p>
     <div class="filete"></div>
-    <p class="lead">Toca cualquiera para preguntar por ella. De unas pocas hay pasajes
-       en los tratados; <b>de la mayor&iacute;a todav&iacute;a no hay nada
-       comprobado</b>, y en ese caso el asistente te lo dir&aacute; en lugar de
-       inventarse una descripci&oacute;n.</p>
+    <p class="lead">Toca cualquiera para preguntar por ella.
+       <span id="secuencia-cuenta"></span></p>
     <div class="grupos">
       <article class="grupo">
         <header>
           <h3>Surya Namaskara</h3>
           <span class="grupo-sub">Saludo al sol</span>
+          <span class="grupo-cuenta">12</span>
         </header>
-        <div class="asanas">
-          <button class="asana c-borde-terracota" data-asana="Pranamasana">Pranamasana</button><button class="asana c-borde-terracota" data-asana="Hasta Utthanasana">Hasta Utthanasana</button><button class="asana c-borde-terracota" data-asana="Padahastasana">Padahastasana</button><button class="asana c-borde-terracota" data-asana="Ashwa Sanchalanasana">Ashwa Sanchalanasana</button><button class="asana c-borde-terracota" data-asana="Parvatasana">Parvatasana</button><button class="asana c-borde-terracota" data-asana="Ashtanga Namaskara">Ashtanga Namaskara</button><button class="asana c-borde-terracota" data-asana="Bhujangasana">Bhujangasana</button><button class="asana c-borde-terracota" data-asana="Parvatasana">Parvatasana</button><button class="asana c-borde-terracota" data-asana="Ashwa Sanchalanasana">Ashwa Sanchalanasana</button><button class="asana c-borde-terracota" data-asana="Padahastasana">Padahastasana</button><button class="asana c-borde-terracota" data-asana="Hasta Utthanasana">Hasta Utthanasana</button><button class="asana c-borde-terracota" data-asana="Pranamasana">Pranamasana</button>
+        <div class="asanas es-secuencia">
+          <button class="asana c-borde-terracota" data-asana="Pranamasana"><span class="asana-num">1</span><span class="asana-nombre">Pranamasana</span></button><button class="asana c-borde-terracota" data-asana="Hasta Utthanasana"><span class="asana-num">2</span><span class="asana-nombre">Hasta Utthanasana</span></button><button class="asana c-borde-terracota" data-asana="Padahastasana"><span class="asana-num">3</span><span class="asana-nombre">Padahastasana</span></button><button class="asana c-borde-terracota" data-asana="Ashwa Sanchalanasana"><span class="asana-num">4</span><span class="asana-nombre">Ashwa Sanchalanasana</span></button><button class="asana c-borde-terracota" data-asana="Parvatasana"><span class="asana-num">5</span><span class="asana-nombre">Parvatasana</span></button><button class="asana c-borde-terracota" data-asana="Ashtanga Namaskara"><span class="asana-num">6</span><span class="asana-nombre">Ashtanga Namaskara</span></button><button class="asana c-borde-terracota es-vuelta" data-asana="Bhujangasana"><span class="asana-num">7</span><span class="asana-nombre">Bhujangasana</span></button><button class="asana c-borde-terracota es-vuelta" data-asana="Parvatasana"><span class="asana-num">8</span><span class="asana-nombre">Parvatasana</span></button><button class="asana c-borde-terracota es-vuelta" data-asana="Ashwa Sanchalanasana"><span class="asana-num">9</span><span class="asana-nombre">Ashwa Sanchalanasana</span></button><button class="asana c-borde-terracota es-vuelta" data-asana="Padahastasana"><span class="asana-num">10</span><span class="asana-nombre">Padahastasana</span></button><button class="asana c-borde-terracota es-vuelta" data-asana="Hasta Utthanasana"><span class="asana-num">11</span><span class="asana-nombre">Hasta Utthanasana</span></button><button class="asana c-borde-terracota es-vuelta" data-asana="Pranamasana"><span class="asana-num">12</span><span class="asana-nombre">Pranamasana</span></button>
         </div>
+        <p class="grupo-nota">De la s&eacute;ptima a la duod&eacute;cima se deshace el camino: son las mismas posturas en espejo.</p>
       </article>
 
       <article class="grupo">
         <header>
           <h3>De pie</h3>
           <span class="grupo-sub">Standing asana</span>
+          <span class="grupo-cuenta">10</span>
         </header>
         <div class="asanas">
-          <button class="asana c-borde-oliva" data-asana="Tadasana">Tadasana<i> · en el póster sale «Tdasana», errata de imprenta</i></button><button class="asana c-borde-oliva" data-asana="Tiryaka Tadasana">Tiryaka Tadasana</button><button class="asana c-borde-oliva" data-asana="Trikonasana">Trikonasana</button><button class="asana c-borde-oliva" data-asana="Parsva Uttanasana">Parsva Uttanasana</button><button class="asana c-borde-oliva" data-asana="Sirsha Angustha Yogasana">Sirsha Angustha Yogasana</button><button class="asana c-borde-oliva" data-asana="Hasta Utthanasana A">Hasta Utthanasana A</button><button class="asana c-borde-oliva" data-asana="Hasta Utthanasana B">Hasta Utthanasana B</button><button class="asana c-borde-oliva" data-asana="Parivritta Trikonasana">Parivritta Trikonasana</button><button class="asana c-borde-oliva" data-asana="Ekapada Pranamasana">Ekapada Pranamasana</button><button class="asana c-borde-oliva" data-asana="Druta Utkatasana">Druta Utkatasana</button>
+          <button class="asana c-borde-oliva" data-asana="Tadasana"><span class="asana-nombre">Tadasana</span><i> · en el póster sale «Tdasana», errata de imprenta</i></button><button class="asana c-borde-oliva" data-asana="Tiryaka Tadasana"><span class="asana-nombre">Tiryaka Tadasana</span></button><button class="asana c-borde-oliva" data-asana="Trikonasana"><span class="asana-nombre">Trikonasana</span></button><button class="asana c-borde-oliva" data-asana="Parsva Uttanasana"><span class="asana-nombre">Parsva Uttanasana</span></button><button class="asana c-borde-oliva" data-asana="Sirsha Angustha Yogasana"><span class="asana-nombre">Sirsha Angustha Yogasana</span></button><button class="asana c-borde-oliva" data-asana="Hasta Utthanasana A"><span class="asana-nombre">Hasta Utthanasana A</span></button><button class="asana c-borde-oliva" data-asana="Hasta Utthanasana B"><span class="asana-nombre">Hasta Utthanasana B</span></button><button class="asana c-borde-oliva" data-asana="Parivritta Trikonasana"><span class="asana-nombre">Parivritta Trikonasana</span></button><button class="asana c-borde-oliva" data-asana="Ekapada Pranamasana"><span class="asana-nombre">Ekapada Pranamasana</span></button><button class="asana c-borde-oliva" data-asana="Druta Utkatasana"><span class="asana-nombre">Druta Utkatasana</span></button>
         </div>
+        
       </article>
 
       <article class="grupo">
         <header>
           <h3>De rodillas</h3>
           <span class="grupo-sub">Kneeling asana</span>
+          <span class="grupo-cuenta">10</span>
         </header>
         <div class="asanas">
-          <button class="asana c-borde-petroleo" data-asana="Simha Garjanasana">Simha Garjanasana</button><button class="asana c-borde-petroleo" data-asana="Veerasana">Veerasana</button><button class="asana c-borde-petroleo" data-asana="Parighasana">Parighasana</button><button class="asana c-borde-petroleo" data-asana="Marjariasana A">Marjariasana A</button><button class="asana c-borde-petroleo" data-asana="Marjariasana B">Marjariasana B</button><button class="asana c-borde-petroleo" data-asana="Ustrasana">Ustrasana</button><button class="asana c-borde-petroleo" data-asana="Balasana">Balasana</button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana A">Tiryaka Marjariasana A</button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana B">Tiryaka Marjariasana B</button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana C">Tiryaka Marjariasana C</button>
+          <button class="asana c-borde-petroleo" data-asana="Simha Garjanasana"><span class="asana-nombre">Simha Garjanasana</span></button><button class="asana c-borde-petroleo" data-asana="Veerasana"><span class="asana-nombre">Veerasana</span></button><button class="asana c-borde-petroleo" data-asana="Parighasana"><span class="asana-nombre">Parighasana</span></button><button class="asana c-borde-petroleo" data-asana="Marjariasana A"><span class="asana-nombre">Marjariasana A</span></button><button class="asana c-borde-petroleo" data-asana="Marjariasana B"><span class="asana-nombre">Marjariasana B</span></button><button class="asana c-borde-petroleo" data-asana="Ustrasana"><span class="asana-nombre">Ustrasana</span></button><button class="asana c-borde-petroleo" data-asana="Balasana"><span class="asana-nombre">Balasana</span></button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana A"><span class="asana-nombre">Tiryaka Marjariasana A</span></button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana B"><span class="asana-nombre">Tiryaka Marjariasana B</span></button><button class="asana c-borde-petroleo" data-asana="Tiryaka Marjariasana C"><span class="asana-nombre">Tiryaka Marjariasana C</span></button>
         </div>
+        
       </article>
 
       <article class="grupo">
         <header>
           <h3>Sentadas</h3>
           <span class="grupo-sub">Sitting asana</span>
+          <span class="grupo-cuenta">10</span>
         </header>
         <div class="asanas">
-          <button class="asana c-borde-terracota" data-asana="Dandasana">Dandasana</button><button class="asana c-borde-terracota" data-asana="Flexión lateral sentada">Flexión lateral sentada<i> · en el póster, «sitting side banding»</i></button><button class="asana c-borde-terracota" data-asana="Gomukhasana">Gomukhasana</button><button class="asana c-borde-terracota" data-asana="Paschimottanasana">Paschimottanasana</button><button class="asana c-borde-terracota" data-asana="Matsyasana">Matsyasana</button><button class="asana c-borde-terracota" data-asana="Bhu Namanasana">Bhu Namanasana</button><button class="asana c-borde-terracota" data-asana="Ardha Matsyendrasana">Ardha Matsyendrasana</button><button class="asana c-borde-terracota" data-asana="Baddha Konasana A">Baddha Konasana A</button><button class="asana c-borde-terracota" data-asana="Baddha Konasana B">Baddha Konasana B</button><button class="asana c-borde-terracota" data-asana="Merudandasana">Merudandasana</button>
+          <button class="asana c-borde-terracota" data-asana="Dandasana"><span class="asana-nombre">Dandasana</span></button><button class="asana c-borde-terracota" data-asana="Flexión lateral sentada"><span class="asana-nombre">Flexión lateral sentada</span><i> · en el póster, «sitting side banding»</i></button><button class="asana c-borde-terracota" data-asana="Gomukhasana"><span class="asana-nombre">Gomukhasana</span></button><button class="asana c-borde-terracota" data-asana="Paschimottanasana"><span class="asana-nombre">Paschimottanasana</span></button><button class="asana c-borde-terracota" data-asana="Matsyasana"><span class="asana-nombre">Matsyasana</span></button><button class="asana c-borde-terracota" data-asana="Bhu Namanasana"><span class="asana-nombre">Bhu Namanasana</span></button><button class="asana c-borde-terracota" data-asana="Ardha Matsyendrasana"><span class="asana-nombre">Ardha Matsyendrasana</span></button><button class="asana c-borde-terracota" data-asana="Baddha Konasana A"><span class="asana-nombre">Baddha Konasana A</span></button><button class="asana c-borde-terracota" data-asana="Baddha Konasana B"><span class="asana-nombre">Baddha Konasana B</span></button><button class="asana c-borde-terracota" data-asana="Merudandasana"><span class="asana-nombre">Merudandasana</span></button>
         </div>
+        
       </article>
 
       <article class="grupo">
         <header>
           <h3>Boca abajo</h3>
           <span class="grupo-sub">Asana in prone position</span>
+          <span class="grupo-cuenta">9</span>
         </header>
         <div class="asanas">
-          <button class="asana c-borde-oliva" data-asana="Makarasana">Makarasana</button><button class="asana c-borde-oliva" data-asana="Bhujangasana">Bhujangasana</button><button class="asana c-borde-oliva" data-asana="Shashankasana">Shashankasana</button><button class="asana c-borde-oliva" data-asana="Ardha Shalabhasana">Ardha Shalabhasana</button><button class="asana c-borde-oliva" data-asana="Poorna Shalabhasana">Poorna Shalabhasana</button><button class="asana c-borde-oliva" data-asana="Tiryaka Bhujangasana A">Tiryaka Bhujangasana A</button><button class="asana c-borde-oliva" data-asana="Tiryaka Bhujangasana B">Tiryaka Bhujangasana B</button><button class="asana c-borde-oliva" data-asana="Santolanasana">Santolanasana</button><button class="asana c-borde-oliva" data-asana="Chaturanga Dandasana">Chaturanga Dandasana</button>
+          <button class="asana c-borde-oliva" data-asana="Makarasana"><span class="asana-nombre">Makarasana</span></button><button class="asana c-borde-oliva" data-asana="Bhujangasana"><span class="asana-nombre">Bhujangasana</span></button><button class="asana c-borde-oliva" data-asana="Shashankasana"><span class="asana-nombre">Shashankasana</span></button><button class="asana c-borde-oliva" data-asana="Ardha Shalabhasana"><span class="asana-nombre">Ardha Shalabhasana</span></button><button class="asana c-borde-oliva" data-asana="Poorna Shalabhasana"><span class="asana-nombre">Poorna Shalabhasana</span></button><button class="asana c-borde-oliva" data-asana="Tiryaka Bhujangasana A"><span class="asana-nombre">Tiryaka Bhujangasana A</span></button><button class="asana c-borde-oliva" data-asana="Tiryaka Bhujangasana B"><span class="asana-nombre">Tiryaka Bhujangasana B</span></button><button class="asana c-borde-oliva" data-asana="Santolanasana"><span class="asana-nombre">Santolanasana</span></button><button class="asana c-borde-oliva" data-asana="Chaturanga Dandasana"><span class="asana-nombre">Chaturanga Dandasana</span></button>
         </div>
+        
       </article>
 
       <article class="grupo">
         <header>
           <h3>Boca arriba</h3>
           <span class="grupo-sub">Asana in supine position</span>
+          <span class="grupo-cuenta">9</span>
         </header>
         <div class="asanas">
-          <button class="asana c-borde-petroleo" data-asana="Padotthanasana">Padotthanasana</button><button class="asana c-borde-petroleo" data-asana="Supta Pawanmuktasana A">Supta Pawanmuktasana A</button><button class="asana c-borde-petroleo" data-asana="Supta Pawanmuktasana B">Supta Pawanmuktasana B</button><button class="asana c-borde-petroleo" data-asana="Kandharasana">Kandharasana</button><button class="asana c-borde-petroleo" data-asana="Supta Vajrasana">Supta Vajrasana</button><button class="asana c-borde-petroleo" data-asana="Supta Balasana">Supta Balasana</button><button class="asana c-borde-petroleo" data-asana="Udarakarshanasana">Udarakarshanasana</button><button class="asana c-borde-petroleo" data-asana="Naukasana A">Naukasana A</button><button class="asana c-borde-petroleo" data-asana="Naukasana B">Naukasana B</button>
+          <button class="asana c-borde-petroleo" data-asana="Padotthanasana"><span class="asana-nombre">Padotthanasana</span></button><button class="asana c-borde-petroleo" data-asana="Supta Pawanmuktasana A"><span class="asana-nombre">Supta Pawanmuktasana A</span></button><button class="asana c-borde-petroleo" data-asana="Supta Pawanmuktasana B"><span class="asana-nombre">Supta Pawanmuktasana B</span></button><button class="asana c-borde-petroleo" data-asana="Kandharasana"><span class="asana-nombre">Kandharasana</span></button><button class="asana c-borde-petroleo" data-asana="Supta Vajrasana"><span class="asana-nombre">Supta Vajrasana</span></button><button class="asana c-borde-petroleo" data-asana="Supta Balasana"><span class="asana-nombre">Supta Balasana</span></button><button class="asana c-borde-petroleo" data-asana="Udarakarshanasana"><span class="asana-nombre">Udarakarshanasana</span></button><button class="asana c-borde-petroleo" data-asana="Naukasana A"><span class="asana-nombre">Naukasana A</span></button><button class="asana c-borde-petroleo" data-asana="Naukasana B"><span class="asana-nombre">Naukasana B</span></button>
         </div>
+        
       </article>
 
       <article class="grupo">
         <header>
           <h3>Invertidas</h3>
           <span class="grupo-sub">Inverted asana</span>
+          <span class="grupo-cuenta">7</span>
         </header>
         <div class="asanas">
-          <button class="asana c-borde-terracota" data-asana="Viparita Karani">Viparita Karani</button><button class="asana c-borde-terracota" data-asana="Salamba Sarvangasana">Salamba Sarvangasana</button><button class="asana c-borde-terracota" data-asana="Halasana">Halasana</button><button class="asana c-borde-terracota" data-asana="Tiryaka Halasana">Tiryaka Halasana</button><button class="asana c-borde-terracota" data-asana="Chakrasana">Chakrasana</button><button class="asana c-borde-terracota" data-asana="Salamba Sirshasana">Salamba Sirshasana</button><button class="asana c-borde-terracota" data-asana="Balasana">Balasana</button>
+          <button class="asana c-borde-terracota" data-asana="Viparita Karani"><span class="asana-nombre">Viparita Karani</span></button><button class="asana c-borde-terracota" data-asana="Salamba Sarvangasana"><span class="asana-nombre">Salamba Sarvangasana</span></button><button class="asana c-borde-terracota" data-asana="Halasana"><span class="asana-nombre">Halasana</span></button><button class="asana c-borde-terracota" data-asana="Tiryaka Halasana"><span class="asana-nombre">Tiryaka Halasana</span></button><button class="asana c-borde-terracota" data-asana="Chakrasana"><span class="asana-nombre">Chakrasana</span></button><button class="asana c-borde-terracota" data-asana="Salamba Sirshasana"><span class="asana-nombre">Salamba Sirshasana</span></button><button class="asana c-borde-terracota" data-asana="Balasana"><span class="asana-nombre">Balasana</span></button>
         </div>
+        
       </article></div>
   </section>
 
@@ -1109,9 +1143,30 @@ botonMusica.addEventListener('click', () => ponerMusica(panelMusica.hidden));
 try { if (localStorage.getItem('musica') === '1') ponerMusica(true); } catch (e) {}
 
 // Las asanas de la secuencia preguntan al asistente, que esta mas arriba en la pagina.
+// Antes de que nadie toque nada, se marca cuales tienen respuesta: descubrirlo
+// fallando una por una es lo peor que puede hacer una lista de 67 botones.
+(function(){
+  let conRespuesta = 0;
+  document.querySelectorAll('.asana').forEach(b => {
+    const hay = buscar('¿Qué es ' + b.dataset.asana + '?').length > 0;
+    b.dataset.hay = hay ? 'si' : 'no';
+    if (hay) conRespuesta++;
+    b.title = hay ? 'Hay pasajes de los textos sobre esta postura'
+                  : 'De esta todavía no hay nada comprobado; te lo dirá';
+  });
+  const marcador = document.getElementById('secuencia-cuenta');
+  if (marcador) marcador.textContent = conRespuesta
+    ? 'De ' + conRespuesta + ' hay pasajes en los textos, marcadas en verde. Del resto, todavía no.'
+    : 'De ninguna hay todavía pasajes comprobados en los textos.';
+})();
+
 document.querySelectorAll('.asana').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.asana[aria-current]').forEach(o => o.removeAttribute('aria-current'));
+  b.setAttribute('aria-current', 'true');     // no se pierde de vista cual se pregunto
   const nombre = b.dataset.asana;
-  document.getElementById('preguntar').scrollIntoView({behavior:'smooth', block:'start'});
+  const destino = document.getElementById('preguntar');
+  destino.scrollIntoView({behavior:'smooth', block:'start'});
+  if (window.__aterrizar) window.__aterrizar(destino);
   responder('¿Qué es ' + nombre + '?');
 });
 document.getElementById('enviar').onclick = () => responder(texto.value.trim());
