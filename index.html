@@ -22,6 +22,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@2.1.3/dist/pose-detection.min.js"></script>
 <script defer src="postura.js"></script>
 <script defer src="respira.js"></script>
+<script defer src="movimiento.js"></script>
 <link rel="apple-touch-icon" href="assets/icono.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Interior">
@@ -34,6 +35,21 @@
     --marino:#1B3A5C; --texto:#3A4654; --suave:#77818E;
     --linea:#DDD5C2; --linea-fina:#E9E3D5;
     --oliva:#7C8049; --petroleo:#43809A; --terracota:#BC6242;
+
+    /* MOVIMIENTO. Las duraciones salen del propio metodo: en el respirometro se mide
+       la proporcion exhalacion/inhalacion, y aqui lo que ENTRA tarda 560ms y lo que
+       SALE 840ms — la misma proporcion 1:1,5. Nada se mueve fuera de este ritmo. */
+    --t-toque:180ms;     /* respuesta al dedo: tiene que ser inmediata */
+    --t-breve:260ms;     /* microinteracciones */
+    --t-estado:400ms;    /* hover y cambios de estado */
+    --t-entra:560ms;     /* aparecer (inhalar) */
+    --t-sale:840ms;      /* desaparecer (exhalar), 1,5x */
+    --paso:70ms;         /* lo que espera cada hermano en una tanda */
+
+    /* Curvas: ninguna rebota. En una web de yoga nada debe dar un respingo. */
+    --e-entra:cubic-bezier(.22,.68,.26,1);    /* llega y se asienta */
+    --e-sale:cubic-bezier(.45,0,.75,.5);      /* se suelta */
+    --e-suave:cubic-bezier(.4,0,.2,1);        /* el resto */
     --loto:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 5c2.6 2.8 3.9 5.7 3.9 8.7 0 3-1.3 5.7-3.9 8.2-2.6-2.5-3.9-5.2-3.9-8.2C12.1 10.7 13.4 7.8 16 5Z"/><path d="M12.1 13.7C9 12.2 6.1 11.8 3.5 12.6c.6 3.4 2.4 5.9 5.2 7.4 2.3 1.2 4.7 1.6 7.3 1.1"/><path d="M19.9 13.7c3.1-1.5 6-1.9 8.6-1.1-.6 3.4-2.4 5.9-5.2 7.4-2.3 1.2-4.7 1.6-7.3 1.1"/></svg>');
   }
   *{box-sizing:border-box}
@@ -156,6 +172,82 @@
     padding:11px 14px;margin:0 0 13px;font-size:14.5px;line-height:1.5}
   .nada{background:#F7EFDC;border:1px solid #E3D3AB;padding:16px 18px;color:#6A5526;font-size:16.5px}
   .nada a{color:var(--terracota);font-weight:600}
+
+  /* ---- SISTEMA DE MOVIMIENTO ----------------------------------------------
+     Regla de oro: sin JavaScript, TODO se ve. La clase .mov la pone el script al
+     arrancar, y solo entonces se esconde lo que va a aparecer. Si el script falla o
+     tarda, la pagina se lee igual. */
+  .mov [data-entra]{opacity:0}
+  .mov [data-entra].visible{opacity:1}
+
+  /* Entrada de portada: la pagina se abre como una inhalacion, de dentro afuera.
+     Una sola secuencia, y se acaba. */
+  .mov.cargando .portada h1{animation:subir var(--t-entra) var(--e-entra) 80ms backwards}
+  .mov.cargando .portada h1 small{animation:subir var(--t-entra) var(--e-entra) 220ms backwards}
+  .mov.cargando .retrato img{animation:revelar 900ms var(--e-entra) 260ms backwards}
+  .mov.cargando .sello-marca{animation:subir var(--t-entra) var(--e-entra) 400ms backwards}
+  .mov.cargando .retrato .cursiva{animation:subir var(--t-entra) var(--e-entra) 480ms backwards}
+  .mov.cargando .retrato .cred{animation:subir var(--t-entra) var(--e-entra) 560ms backwards}
+  .mov.cargando .retrato .botones{animation:subir var(--t-entra) var(--e-entra) 640ms backwards}
+
+  @keyframes subir{from{opacity:0;transform:translate3d(0,14px,0)}}
+  @keyframes revelar{from{opacity:0;transform:scale(1.035)}}
+
+  /* Aparicion al desplazar: 12px, ni uno mas. Se nota el asentamiento, no el viaje. */
+  [data-entra]{transition:opacity var(--t-entra) var(--e-entra),
+                           transform var(--t-entra) var(--e-entra)}
+  .mov [data-entra]{transform:translate3d(0,12px,0)}
+  .mov [data-entra].visible{transform:none}
+
+  /* El filete de cada seccion se traza, no aparece: es el gesto de subrayar. */
+  .mov .filete{transform:scaleX(0);transform-origin:left;
+    transition:transform var(--t-sale) var(--e-entra) 120ms}
+  .mov .filete.visible{transform:scaleX(1)}
+
+  /* Estados al pasar el cursor: TODOS los elementos pulsables responden igual.
+     El borde se afirma y la pieza sube un pelo. Nada mas. */
+  .chip,.asana,a.boton,.como article,.bloque,#respira-zona,.campo button,.boton-foto{
+    transition:border-color var(--t-estado) var(--e-suave),
+               background-color var(--t-estado) var(--e-suave),
+               transform var(--t-estado) var(--e-suave),
+               box-shadow var(--t-estado) var(--e-suave)}
+  .chip:hover,.asana:hover,a.boton:hover{transform:translateY(-1px)}
+  .chip:active,.asana:active,a.boton:active,.campo button:active,.boton-foto:active{
+    transform:translateY(0) scale(.985);transition-duration:var(--t-toque)}
+  .campo button,.boton-foto{transition:background-color var(--t-estado) var(--e-suave),
+                                        transform var(--t-toque) var(--e-suave)}
+
+  /* La respuesta del asistente: lo que la gente esta esperando. Entra despacio, y el
+     «Buscando...» late para que se vea que sigue vivo. */
+  .el{animation:asomar var(--t-entra) var(--e-entra) backwards}
+  .yo{animation:asomar var(--t-breve) var(--e-entra) backwards}
+  .otra{animation:asomar var(--t-entra) var(--e-entra) 120ms backwards}
+  @keyframes asomar{from{opacity:0;transform:translate3d(0,8px,0)}}
+  .buscando{animation:latir 1900ms var(--e-suave) infinite}
+  @keyframes latir{0%,100%{opacity:.45}50%{opacity:1}}
+
+  /* Lecturas de la postura y cifras del respirometro: entran en tanda, de arriba abajo. */
+  .lectura,.respira-cifra,.cifra{animation:asomar var(--t-entra) var(--e-entra) backwards}
+  .lectura:nth-child(2),.respira-cifra:nth-child(2){animation-delay:var(--paso)}
+  .lectura:nth-child(3),.respira-cifra:nth-child(3){animation-delay:calc(var(--paso)*2)}
+  .lectura:nth-child(4){animation-delay:calc(var(--paso)*3)}
+  .respira-cita{animation:asomar var(--t-sale) var(--e-entra) calc(var(--paso)*4) backwards}
+
+  /* Ir a una seccion desde otra parte: el destino se ilumina un instante, para que la
+     vista sepa donde ha aterrizado. */
+  section{scroll-margin-top:24px}
+  .aterriza{animation:aterrizar 1400ms var(--e-sale)}
+  @keyframes aterrizar{0%{background-color:rgba(67,128,154,.09)}100%{background-color:transparent}}
+
+  /* NADA de lo anterior ocurre si el sistema pide menos movimiento. */
+  @media (prefers-reduced-motion:reduce){
+    .mov [data-entra],.mov [data-entra].visible{opacity:1;transform:none;transition:none}
+    .mov .filete{transform:scaleX(1);transition:none}
+    .mov.cargando *{animation:none !important}
+    .el,.yo,.otra,.lectura,.respira-cifra,.cifra,.respira-cita,.aterriza{animation:none}
+    .chip:hover,.asana:hover,a.boton:hover,.chip:active,.asana:active{transform:none}
+    .buscando{animation:none;opacity:.7}
+  }
 
   /* ---- el respirometro ---- */
   #respira-zona{position:relative;display:block;width:100%;border:1px solid var(--linea);
@@ -717,7 +809,7 @@ async function responder(pregunta){
   const turno = nodo('div','turno');
   turno.appendChild(nodo('div','yo',pregunta));
   const caja = nodo('div','el');
-  caja.appendChild(nodo('p', null, 'Buscando\u2026'));
+  caja.appendChild(nodo('p', 'buscando', 'Buscando\u2026'));
   turno.appendChild(caja);
   hilo.appendChild(turno);
 
