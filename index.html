@@ -470,6 +470,39 @@
   .punto{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;flex:0 0 auto}
   .punto svg{width:19px;height:19px}
   .wa{background:var(--oliva)} .mail{background:var(--petroleo)}
+  /* ---- indice ----
+     Aparece al bajar de la portada y marca en cual estas. Con 10.000 px de pagina en
+     movil, sin esto solo queda ir a ciegas. */
+  #indice{position:fixed;left:0;right:0;bottom:0;z-index:38;display:flex;gap:2px;
+    background:rgba(244,240,230,.94);backdrop-filter:blur(8px);
+    border-top:1px solid var(--linea);padding:7px 8px;overflow-x:auto;
+    scrollbar-width:none;transform:translateY(100%);
+    transition:transform var(--t-sale) var(--e-entra)}
+  #indice::-webkit-scrollbar{display:none}
+  #indice[hidden]{display:flex}          /* el hidden lo gestiona el guion, no el CSS */
+  #indice.visible{transform:none}
+  #indice a{flex:0 0 auto;padding:8px 13px;font-size:14.5px;color:var(--texto);
+    text-decoration:none;letter-spacing:.02em;border-bottom:2px solid transparent;
+    transition:color var(--t-estado) var(--e-suave),border-color var(--t-estado) var(--e-suave)}
+  #indice a:hover{color:var(--marino)}
+  #indice a[aria-current="true"]{color:var(--marino);border-bottom-color:var(--terracota)}
+  @media(min-width:900px){
+    #indice{left:auto;right:16px;bottom:auto;top:50%;transform:translate(120%,-50%);
+      flex-direction:column;gap:0;border:1px solid var(--linea);border-radius:2px;
+      padding:8px 6px;max-width:150px}
+    #indice.visible{transform:translate(0,-50%)}
+    #indice a{padding:7px 12px;font-size:14px}
+    #indice a[aria-current="true"]{border-bottom-color:transparent;
+      border-left:2px solid var(--terracota);padding-left:10px}
+  }
+  /* Con el indice abajo, los botones flotantes suben para no taparse. */
+  body.con-indice #musica-boton{bottom:66px}
+  body.con-indice #musica-panel{bottom:124px}
+  @media(min-width:900px){
+    body.con-indice #musica-boton{bottom:16px}
+    body.con-indice #musica-panel{bottom:74px}
+  }
+
   /* ---- boton de musica ---- */
   #musica-boton{position:fixed;right:16px;bottom:16px;z-index:40;display:flex;
     align-items:center;gap:9px;background:var(--marino);color:#fff;border:0;
@@ -862,6 +895,15 @@
   </section>
 </div>
 
+<nav id="indice" aria-label="Ir a una parte de la p&aacute;gina" hidden>
+  <a href="#hablar">Hablarle</a>
+  <a href="#preguntar">Preguntar</a>
+  <a href="#respira">Respirar</a>
+  <a href="#secuencia">Asanas</a>
+  <a href="#postura">Postura</a>
+  <a href="#llevatela">Llevártela</a>
+</nav>
+
 <button id="musica-boton" type="button" aria-expanded="false"
         aria-controls="musica-panel" title="Poner la música de clase">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3 9 5.2v9.3a3.4 3.4 0 1 0 1.8 3V8.4l7.4-1.5v5.4a3.4 3.4 0 1 0 1.8 3V3Z"/></svg>
@@ -1115,6 +1157,49 @@ document.querySelectorAll('.chip').forEach(c => c.onclick = () => responder(c.te
     if (!audio.paused){ audio.pause(); audio.currentTime = 0; return; }
     audio.play().catch(() => {});
   });
+})();
+
+// El indice: aparece al dejar atras la portada y marca donde estas. Se construye con
+// las secciones que YA existen; no cambia ninguna.
+(function(){
+  const indice = document.getElementById('indice');
+  if (!indice) return;
+  const enlaces = [...indice.querySelectorAll('a')];
+  const destinos = enlaces.map(a => document.querySelector(a.getAttribute('href')))
+                          .filter(Boolean);
+  const portada = document.querySelector('.retrato') || document.querySelector('header');
+
+  function mostrar(si){
+    indice.classList.toggle('visible', si);
+    document.body.classList.toggle('con-indice', si);
+  }
+
+  if ('IntersectionObserver' in window){
+    // Se muestra cuando la portada ya no se ve.
+    new IntersectionObserver(es => mostrar(!es[0].isIntersecting),
+                             {threshold: 0.15}).observe(portada);
+    // Y marca la seccion en la que estas.
+    const vistas = new Set();
+    new IntersectionObserver(es => {
+      for (const e of es) e.isIntersecting ? vistas.add(e.target) : vistas.delete(e.target);
+      const activa = destinos.find(d => vistas.has(d));
+      enlaces.forEach(a => {
+        const suyo = document.querySelector(a.getAttribute('href')) === activa;
+        suyo ? a.setAttribute('aria-current','true') : a.removeAttribute('aria-current');
+      });
+    }, {rootMargin: '-45% 0px -45% 0px'}).observe.length;
+    destinos.forEach(d => new IntersectionObserver(es => {
+      for (const e of es) e.isIntersecting ? vistas.add(e.target) : vistas.delete(e.target);
+      const activa = destinos.find(x => vistas.has(x));
+      enlaces.forEach(a => {
+        const suyo = document.querySelector(a.getAttribute('href')) === activa;
+        suyo ? a.setAttribute('aria-current','true') : a.removeAttribute('aria-current');
+      });
+    }, {rootMargin: '-45% 0px -45% 0px'}).observe(d));
+  } else {
+    mostrar(true);
+  }
+  indice.hidden = false;
 })();
 
 const botonMusica = document.getElementById('musica-boton');
