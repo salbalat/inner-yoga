@@ -1,7 +1,7 @@
 
 'use strict';
-const VERSION = 'ii-08a79dda9795';
-const ESENCIALES = ['./', './index.html', './postura.js', './respira.js', './movimiento.js', './manifest.webmanifest',
+const VERSION = 'ii-bd135f3f670e';
+const ESENCIALES = ['./', './index.html', './postura.js', './respira.js', './movimiento.js', './hablar.js', './manifest.webmanifest',
                     './assets/veronica-rio.jpg', './assets/bienvenida.mp3', './assets/icono.png'];
 
 self.addEventListener('install', ev => {
