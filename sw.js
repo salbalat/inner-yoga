@@ -1,6 +1,6 @@
 
 'use strict';
-const VERSION = 'ii-bd135f3f670e';
+const VERSION = 'ii-3f54097deb29';
 const ESENCIALES = ['./', './index.html', './postura.js', './respira.js', './movimiento.js', './hablar.js', './manifest.webmanifest',
                     './assets/veronica-rio.jpg', './assets/bienvenida.mp3', './assets/icono.png'];
 

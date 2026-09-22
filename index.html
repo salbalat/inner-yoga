@@ -276,6 +276,16 @@
     -webkit-tap-highlight-color:transparent;
     transition:border-color var(--t-sale) var(--e-suave),background var(--t-sale) var(--e-suave)}
   #hablar-zona[data-fase="escuchando"]{border-color:var(--petroleo);background:#F7F4EC}
+  /* En reposo la figura respira: 4 segundos de inhalar y exhalar, el ritmo de una
+     respiracion tranquila. Es la invitacion a tocarla; en cuanto se usa, para. */
+  #hablar-zona[data-fase="quieto"] .anillo{animation:respirar 8s var(--e-suave) infinite}
+  #hablar-zona[data-fase="quieto"] .a-respiracion{animation-delay:.35s}
+  #hablar-zona[data-fase="quieto"] .a-mente{animation-delay:.7s}
+  @keyframes respirar{0%,100%{transform:scale(1);opacity:.32}
+    50%{transform:scale(1.055);opacity:.6}}
+  @media (prefers-reduced-motion:reduce){
+    #hablar-zona[data-fase="quieto"] .anillo{animation:none}
+  }
   #hablar-zona[data-fase="pensando"]{border-color:var(--oliva)}
   #hablar-zona[data-fase="hablando"]{border-color:var(--terracota)}
   #hablar-zona:focus-visible{outline:2px solid var(--petroleo);outline-offset:3px}
@@ -284,7 +294,7 @@
     #hablar-zona{cursor:none}
     #hablar-zona:hover .senal{transform:translate(-50%,-50%) scale(1.12)}
   }
-  .escena-voz{position:relative;height:clamp(210px,40vw,300px);perspective:900px;
+  .escena-voz{position:relative;height:clamp(250px,52vw,360px);perspective:900px;
     transform-style:preserve-3d;overflow:hidden;display:grid;place-items:center}
   #hablar-zona .anillo{position:absolute;inset:0;margin:auto;aspect-ratio:1;border-radius:50%;
     border:1px solid currentColor;will-change:transform,opacity}
@@ -504,6 +514,30 @@
     </div>
   </section>
 
+  <section id="hablar">
+    <h2>Dile algo</h2>
+    <p class="cursiva">Preg&uacute;ntale con tu voz. Te contesta con la suya.</p>
+    <div class="filete"></div>
+
+    <div id="hablar-zona" tabindex="0" role="button" data-fase="quieto"
+         aria-label="Tocar para hablar con Ver&oacute;nica">
+      <div class="escena-voz">
+        <span class="anillo a-cuerpo"></span>
+        <span class="anillo a-respiracion"></span>
+        <span class="anillo a-mente"></span>
+        <canvas id="hablar-lienzo"></canvas>
+        <svg class="senal" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z"/><path d="M18 11a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.9V22h2v-3.1A8 8 0 0 0 20 11h-2Z"/></svg>
+      </div>
+      <p id="hablar-estado">Toca y preg&uacute;ntale lo que quieras.</p>
+    </div>
+
+    <div id="hablar-hilo" aria-live="polite"></div>
+    <p class="aviso">Los tres c&iacute;rculos son sus tres pilares &mdash; cuerpo,
+       respiraci&oacute;n y mente &mdash; y se mueven con el sonido real de tu voz
+       mientras hablas, y con la suya cuando contesta. Si prefieres escribir, tienes el
+       asistente justo debajo.</p>
+  </section>
+
   <section>
     <h2 class="versal">Ingeniería Interior</h2>
     <p class="cursiva">Un m&eacute;todo personalizado para ayudarte a:</p>
@@ -583,30 +617,6 @@
         <p>Sesiones diseñadas para tus objetivos, necesidades y momento vital, combinando la práctica de yoga, la meditación y el trabajo corporal.</p>
         <p class="cierre">Un acompañamiento personalizado para que integres lo aprendido en tu día a día y lo hagas parte de tu vida.</p>
       </article></div>
-  </section>
-
-  <section id="hablar">
-    <h2>Dile algo</h2>
-    <p class="cursiva">Preg&uacute;ntale con tu voz. Te contesta con la suya.</p>
-    <div class="filete"></div>
-
-    <div id="hablar-zona" tabindex="0" role="button" data-fase="quieto"
-         aria-label="Tocar para hablar con Ver&oacute;nica">
-      <div class="escena-voz">
-        <span class="anillo a-cuerpo"></span>
-        <span class="anillo a-respiracion"></span>
-        <span class="anillo a-mente"></span>
-        <canvas id="hablar-lienzo"></canvas>
-        <svg class="senal" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z"/><path d="M18 11a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.9V22h2v-3.1A8 8 0 0 0 20 11h-2Z"/></svg>
-      </div>
-      <p id="hablar-estado">Toca y preg&uacute;ntale lo que quieras.</p>
-    </div>
-
-    <div id="hablar-hilo" aria-live="polite"></div>
-    <p class="aviso">Los tres c&iacute;rculos son sus tres pilares &mdash; cuerpo,
-       respiraci&oacute;n y mente &mdash; y se mueven con el sonido real de tu voz
-       mientras hablas, y con la suya cuando contesta. Si prefieres escribir, tienes el
-       asistente justo debajo.</p>
   </section>
 
   <section id="preguntar">
