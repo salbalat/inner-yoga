@@ -1,6 +1,6 @@
 
 'use strict';
-const VERSION = 'ii-f0791b64396b';
+const VERSION = 'ii-27568be6bf78';
 const ESENCIALES = ['./', './index.html', './postura.js', './respira.js', './movimiento.js', './hablar.js', './manifest.webmanifest',
                     './assets/veronica-rio-860.webp'  // la que ve un movil; el mp3 de la
                               // bienvenida NO: 579 KB que
