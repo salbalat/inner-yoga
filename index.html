@@ -983,9 +983,10 @@ async function preguntarAlServidor(mensaje){
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({message: mensaje}),
     });
-    clearTimeout(reloj);
-    if (!r.ok) return null;
+    if (!r.ok) { clearTimeout(reloj); return null; }
+    // El reloj NO se limpia hasta tener el cuerpo: leerlo tambien puede colgarse.
     const d = await r.json();
+    clearTimeout(reloj);
     if (!d || !d.answer || d.error) return null;
     // Si no trae fuentes, no sale de ningun libro: se avisa en la respuesta.
     return {texto: d.answer, conFuente: Array.isArray(d.sources) && d.sources.length > 0};
