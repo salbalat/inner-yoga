@@ -219,8 +219,8 @@
   .mov.cargando .retrato .cred{animation:subir var(--t-entra) var(--e-entra) 560ms backwards}
   .mov.cargando .retrato .botones{animation:subir var(--t-entra) var(--e-entra) 640ms backwards}
 
-  @keyframes subir{from{opacity:0;transform:translate3d(0,14px,0)}}
-  @keyframes revelar{from{opacity:0;transform:scale(1.035)}}
+  @keyframes subir{from{transform:translate3d(0,14px,0)}}
+  @keyframes revelar{from{transform:scale(1.035)}}
 
   /* Aparicion al desplazar: 12px, ni uno mas. Se nota el asentamiento, no el viaje. */
   [data-entra]{transition:opacity var(--t-entra) var(--e-entra),
