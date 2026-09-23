@@ -1,10 +1,12 @@
 
 'use strict';
 const VERSION = 'ii-e368618d91b4';
-const ESENCIALES = ['./', './index.html', './postura.js', './respira.js', './movimiento.js', './hablar.js', './manifest.webmanifest',
-                    './assets/veronica-rio-860.webp'  // la que ve un movil; el mp3 de la
-                              // bienvenida NO: 579 KB que
-                              // casi nadie escucha. Se guarda al pedirlo., './assets/icono.png'];
+// Lo imprescindible para que la pagina abra sin red. La foto es la version de movil;
+// el mp3 de la bienvenida NO entra: son 579 KB que casi nadie escucha, y se guarda
+// solo cuando alguien lo pide.
+const ESENCIALES = ['./', './index.html', './postura.js', './respira.js',
+                    './movimiento.js', './hablar.js', './manifest.webmanifest',
+                    './assets/veronica-rio-860.webp', './assets/icono.png'];
 
 self.addEventListener('install', ev => {
   ev.waitUntil((async () => {
