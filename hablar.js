@@ -210,7 +210,9 @@
       audio.onended = () => { sonando = null; poner('quieto', 'Toca y pregúntale otra cosa.'); };
       await audio.play();
     } catch (e) {
-      poner('quieto', 'Toca y pregúntale otra cosa.');
+      // Sin voz —servidor caido o sin cuota— se dice, en vez de callar y dejar
+      // al usuario esperando un audio que no va a llegar.
+      poner('quieto', 'Ahora no puedo ponerte su voz. La respuesta está escrita aquí.');
     }
   }
 

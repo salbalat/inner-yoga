@@ -1089,8 +1089,8 @@ function ponerEscucha(caja, texto){
         sonando = audio; audio.onended = fin;
         audio.play(); b.textContent = 'Parar';
       } catch (e) {
-        b.textContent = 'No he podido';
-        setTimeout(fin, 2500);
+        b.textContent = 'Su voz no está disponible ahora';
+        setTimeout(fin, 5000);
       } finally { b.disabled = false; }
       return;
     }
