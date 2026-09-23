@@ -975,7 +975,9 @@ const AGENTE = "https://homeai.tailf13d1b.ts.net/interior-agente";
 async function preguntarAlServidor(mensaje){
   try {
     const ctrl = new AbortController();
-    const reloj = setTimeout(() => ctrl.abort(), 25000);
+    // 6s: el servidor sano tarda entre 0,5 y 3. Si no esta, mas vale contestar ya
+    // con las fichas de la propia pagina que tener al usuario esperando.
+    const reloj = setTimeout(() => ctrl.abort(), 6000);
     const r = await fetch(AGENTE + "/api/publico", {
       method: "POST", signal: ctrl.signal,
       headers: {"Content-Type": "application/json"},
