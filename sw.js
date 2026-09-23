@@ -1,8 +1,9 @@
 
 'use strict';
-const VERSION = 'ii-62e6695c5aeb';
+const VERSION = 'ii-f0791b64396b';
 const ESENCIALES = ['./', './index.html', './postura.js', './respira.js', './movimiento.js', './hablar.js', './manifest.webmanifest',
-                    './assets/veronica-rio.jpg'   // el mp3 de la bienvenida NO: 579 KB que
+                    './assets/veronica-rio-860.webp'  // la que ve un movil; el mp3 de la
+                              // bienvenida NO: 579 KB que
                               // casi nadie escucha. Se guarda al pedirlo., './assets/icono.png'];
 
 self.addEventListener('install', ev => {
