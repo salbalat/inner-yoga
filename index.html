@@ -1071,12 +1071,12 @@ function decirConElMovil(texto, alTerminar){
 }
 
 function ponerEscucha(caja, texto){
-  if (!texto) return;
-  if (!VOZ_LISTA && !('speechSynthesis' in window)) return;
+  if (!texto || !VOZ_LISTA) return;   // o suena ella, o no se ofrece
+
   const b = nodo('button', 'escuchar');
   b.type = 'button';
   b.setAttribute('aria-label', 'Escuchar la respuesta con la voz de Verónica');
-  b.textContent = VOZ_LISTA ? 'Escuchar a Verónica' : 'Escuchar (voz del móvil)';
+  b.textContent = 'Escuchar a Verónica';
   b.onclick = async () => {
     if (sonando){ sonando.pause(); sonando = null; b.textContent = 'Escuchar'; return; }
     const fin = () => { sonando = null; b.textContent = 'Escuchar'; };
