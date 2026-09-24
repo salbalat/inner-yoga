@@ -143,12 +143,18 @@
     if (!audio.size){ poner('quieto', 'No he cogido nada. Toca y habla.'); return; }
     poner('pensando', 'Un momento…');
     try {
+      const _diag = 'tipo=' + (audio.type||'?') + ' bytes=' + audio.size
+        + ' trozos=' + trozos.length + ' rec=' + (grabadora && grabadora.mimeType);
       const r = await fetch(AGENTE + '/api/dictar', {
         method: 'POST',
         headers: {'Content-Type': audio.type || 'audio/webm'},
         body: audio,
       });
-      if (!r.ok) throw new Error(r.status);
+      if (!r.ok) {
+        let _t = ''; try { _t = (await r.text()).slice(0,180); } catch(e){}
+        poner('quieto', 'DIAG ' + _diag + ' | ' + r.status + ' ' + _t);
+        return;
+      }
       const d = await r.json();
       const pregunta = (d.texto || '').trim();
       if (!pregunta){ poner('quieto', 'No te he entendido. Prueba otra vez.'); return; }
