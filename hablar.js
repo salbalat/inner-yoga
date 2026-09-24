@@ -81,6 +81,11 @@
   // ella habla antes de escuchar, asi que caiamos justo en ese caso. Se graba el audio
   // y lo transcribe el servidor: igual de bien en cualquier navegador.
   let grabadora = null, trozos = [], flujo = null, flujoGrabar = null;
+  // Captura propia, por si MediaRecorder no entrega nada. En iOS devuelve un
+  // envase vacio (bytes=0, trozos=0) y no hay manera de sacarle audio; de aqui
+  // SI sale, porque es el mismo grafo que mueve los tres circulos. El WAV se
+  // arma a mano, y el servidor ya lo acepta: /api/dictar transcribe wav.
+  let capturador = null, pcm = [], pcmN = 0, capturando = false, nivelMax = 0;
 
   async function abrirMicro(){
     if (flujo) return true;
@@ -93,6 +98,28 @@
       analizador.smoothingTimeConstant = 0.8;
       datos = new Uint8Array(analizador.frequencyBinCount);
       micro.connect(analizador);
+      // Un nodo que copia lo que entra. Va a volumen CERO y de ahi a la salida:
+      // sin conectarlo a algun destino no se ejecuta, y a volumen normal se
+      // oiria a si misma.
+      try {
+        capturador = audioCtx.createScriptProcessor(4096, 1, 1);
+        capturador.onaudioprocess = (ev) => {
+          if (!capturando) return;
+          const dentro = ev.inputBuffer.getChannelData(0);
+          let pico = 0;
+          for (let i = 0; i < dentro.length; i++){
+            const v = Math.abs(dentro[i]);
+            if (v > pico) pico = v;
+          }
+          if (pico > nivelMax) nivelMax = pico;
+          if (pcmN < 48000 * 70){ pcm.push(new Float32Array(dentro)); pcmN += dentro.length; }
+        };
+        const mudo = audioCtx.createGain();
+        mudo.gain.value = 0;
+        micro.connect(capturador);
+        capturador.connect(mudo);
+        mudo.connect(audioCtx.destination);
+      } catch (e) { capturador = null; }
       return true;
     } catch (e) {
       estado.textContent = 'No me dejas usar el micrófono. Puedes escribirle más abajo.';
@@ -148,6 +175,7 @@
     grabadora.onstop = enviarGrabacion;
     // Con trozo cada segundo. Sin `timeslice`, Safari entrega un solo bloque al
     // parar y a veces sale vacio; pidiendolo por partes, el audio va saliendo.
+    pcm = []; pcmN = 0; nivelMax = 0; capturando = true;
     grabadora.start(1000);
     poner('escuchando', 'Te escucho… toca otra vez cuando acabes.');
 
@@ -159,18 +187,51 @@
     try { grabadora && grabadora.state === 'recording' && grabadora.stop(); } catch (e) {}
   }
 
+  // De los trozos a un WAV de 16 bits: lo mas facil de leer para cualquiera, y
+  // lo que el servidor ya transcribe sin tocar nada.
+  function armarWav(){
+    if (!pcmN) return null;
+    const todo = new Float32Array(pcmN);
+    let k = 0;
+    for (const t of pcm){ todo.set(t, k); k += t.length; }
+    const hz = (audioCtx && audioCtx.sampleRate) || 48000;
+    const b = new ArrayBuffer(44 + todo.length * 2);
+    const v = new DataView(b);
+    const txt = (pos, t) => { for (let i = 0; i < t.length; i++) v.setUint8(pos + i, t.charCodeAt(i)); };
+    txt(0, 'RIFF'); v.setUint32(4, 36 + todo.length * 2, true); txt(8, 'WAVE');
+    txt(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+    v.setUint16(22, 1, true); v.setUint32(24, hz, true);
+    v.setUint32(28, hz * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+    txt(36, 'data'); v.setUint32(40, todo.length * 2, true);
+    for (let i = 0; i < todo.length; i++){
+      const x = Math.max(-1, Math.min(1, todo[i]));
+      v.setInt16(44 + i * 2, x < 0 ? x * 0x8000 : x * 0x7fff, true);
+    }
+    return new Blob([b], {type: 'audio/wav'});
+  }
+
   function soltarCopia(){
     if (flujoGrabar){ flujoGrabar.getTracks().forEach(t => t.stop()); flujoGrabar = null; }
   }
 
   async function enviarGrabacion(){
+    capturando = false;
     soltarCopia();                 // la copia ya ha hecho su trabajo
-    const audio = new Blob(trozos, {type: (grabadora && grabadora.mimeType) || 'audio/webm'});
+    let audio = new Blob(trozos, {type: (grabadora && grabadora.mimeType) || 'audio/webm'});
+    // Si el grabador del navegador no ha dado nada —iOS—, va lo que capturamos
+    // nosotros. Es el mismo audio que mueve los circulos, asi que si los
+    // circulos se movian, aqui hay voz.
+    let porNuestraCuenta = false;
+    if (audio.size < 1024){
+      const wav = armarWav();
+      if (wav && wav.size > 1024){ audio = wav; porNuestraCuenta = true; }
+    }
     // Diagnostico bajo demanda: solo con ?diag=1 en la direccion. Sirve para saber
     // QUE se ha grabado cuando algo falla, sin ensenarle numeros a nadie mas.
     const DIAG = /[?&]diag=1/.test(location.search);
     const parte = 'graba=' + (grabadora && grabadora.mimeType) + ' bytes=' + audio.size
-      + ' trozos=' + trozos.length;
+      + ' trozos=' + trozos.length + ' wav=' + (porNuestraCuenta ? 'si' : 'no')
+      + ' nivel=' + nivelMax.toFixed(3) + ' muestras=' + pcmN;
 
     // Menos de 1 KB no es una pregunta: es un envase vacio. Paso justo con el webm
     // falso de Safari (5 bytes). Mejor decirlo aqui que mandarlo y recibir un error
