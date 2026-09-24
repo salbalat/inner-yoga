@@ -80,7 +80,7 @@
   // reproducir audio, el microfono se queda bloqueado y no vuelve a reconocer. Y aqui
   // ella habla antes de escuchar, asi que caiamos justo en ese caso. Se graba el audio
   // y lo transcribe el servidor: igual de bien en cualquier navegador.
-  let grabadora = null, trozos = [], flujo = null;
+  let grabadora = null, trozos = [], flujo = null, flujoGrabar = null;
 
   async function abrirMicro(){
     if (flujo) return true;
@@ -128,18 +128,27 @@
         if (MediaRecorder.isTypeSupported(t)){ tipo = t; break; }
       }
     }
+    // EL GRABADOR SE LLEVA SU PROPIA COPIA DEL MICROFONO.
+    // En iOS, si el mismo MediaStream esta conectado a un AudioContext —aqui lo esta,
+    // para que los tres circulos se muevan con la voz— el MediaRecorder se queda sin
+    // audio y devuelve un fichero de nada. Probado en el iPhone de Salvador: 15
+    // segundos hablando y menos de 1 KB. Con una copia propia (`clone()`), el grafo
+    // de los circulos y la grabacion dejan de pisarse.
+    flujoGrabar = flujo.clone();
     try {
-      grabadora = tipo ? new MediaRecorder(flujo, {mimeType: tipo})
-                       : new MediaRecorder(flujo);
+      grabadora = tipo ? new MediaRecorder(flujoGrabar, {mimeType: tipo})
+                       : new MediaRecorder(flujoGrabar);
     } catch (e) {
-      try { grabadora = new MediaRecorder(flujo); } catch (e2) {
+      try { grabadora = new MediaRecorder(flujoGrabar); } catch (e2) {
         poner('quieto', 'Este navegador no sabe grabar. Escríbele más abajo.');
         return;
       }
     }
     grabadora.ondataavailable = ev => { if (ev.data && ev.data.size) trozos.push(ev.data); };
     grabadora.onstop = enviarGrabacion;
-    grabadora.start();
+    // Con trozo cada segundo. Sin `timeslice`, Safari entrega un solo bloque al
+    // parar y a veces sale vacio; pidiendolo por partes, el audio va saliendo.
+    grabadora.start(1000);
     poner('escuchando', 'Te escucho… toca otra vez cuando acabes.');
 
     // Por si se olvida de parar: un minuto es de sobra para una pregunta.
@@ -150,12 +159,26 @@
     try { grabadora && grabadora.state === 'recording' && grabadora.stop(); } catch (e) {}
   }
 
+  function soltarCopia(){
+    if (flujoGrabar){ flujoGrabar.getTracks().forEach(t => t.stop()); flujoGrabar = null; }
+  }
+
   async function enviarGrabacion(){
+    soltarCopia();                 // la copia ya ha hecho su trabajo
     const audio = new Blob(trozos, {type: (grabadora && grabadora.mimeType) || 'audio/webm'});
+    // Diagnostico bajo demanda: solo con ?diag=1 en la direccion. Sirve para saber
+    // QUE se ha grabado cuando algo falla, sin ensenarle numeros a nadie mas.
+    const DIAG = /[?&]diag=1/.test(location.search);
+    const parte = 'graba=' + (grabadora && grabadora.mimeType) + ' bytes=' + audio.size
+      + ' trozos=' + trozos.length;
+
     // Menos de 1 KB no es una pregunta: es un envase vacio. Paso justo con el webm
     // falso de Safari (5 bytes). Mejor decirlo aqui que mandarlo y recibir un error
     // del que no se entiende nada.
-    if (audio.size < 1024){ poner('quieto', 'No he cogido nada. Toca y habla.'); return; }
+    if (audio.size < 1024){
+      poner('quieto', DIAG ? ('VACIO · ' + parte) : 'No he cogido nada. Toca y habla.');
+      return;
+    }
     poner('pensando', 'Un momento…');
     try {
       const r = await fetch(AGENTE + '/api/dictar', {
@@ -163,10 +186,20 @@
         headers: {'Content-Type': audio.type || 'audio/webm'},
         body: audio,
       });
-      if (!r.ok) throw new Error(r.status);
+      if (!r.ok) {
+        if (DIAG){
+          let t = ''; try { t = (await r.text()).slice(0, 200); } catch (e) {}
+          poner('quieto', 'FALLO ' + r.status + ' · ' + parte + ' · ' + t);
+          return;
+        }
+        throw new Error(r.status);
+      }
       const d = await r.json();
       const pregunta = (d.texto || '').trim();
-      if (!pregunta){ poner('quieto', 'No te he entendido. Prueba otra vez.'); return; }
+      if (!pregunta){
+        poner('quieto', DIAG ? ('SIN TEXTO · ' + parte) : 'No te he entendido. Prueba otra vez.');
+        return;
+      }
       responderHablando(pregunta);
     } catch (e) {
       poner('quieto', 'No he podido entender el audio. Prueba otra vez o escríbele.');
