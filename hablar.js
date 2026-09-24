@@ -115,10 +115,22 @@
     arrancarPintura();
 
     trozos = [];
-    let tipo = 'audio/webm';
-    if (window.MediaRecorder && !MediaRecorder.isTypeSupported(tipo)) tipo = 'audio/mp4';
+    // SAFARI DE iOS MIENTE con 'audio/webm': isTypeSupported() dice que si, el
+    // MediaRecorder se crea con mimeType 'audio/webm; codecs=' (sin codec) y graba
+    // CINCO BYTES. El servidor recibia ese fichero y OpenAI respondia «Invalid file
+    // format», y en la pagina salia «No he podido entender el audio» sin mas pista.
+    // Por eso se prueba mp4 PRIMERO —que es lo que Safari graba de verdad— y solo
+    // despues webm CON codec declarado, que es la forma en que los demas navegadores
+    // contestan la verdad. 'audio/webm' a secas se queda el ultimo, ya sin fiarse.
+    let tipo = '';
+    if (window.MediaRecorder){
+      for (const t of ['audio/mp4', 'audio/webm;codecs=opus', 'audio/ogg;codecs=opus', 'audio/webm']){
+        if (MediaRecorder.isTypeSupported(t)){ tipo = t; break; }
+      }
+    }
     try {
-      grabadora = new MediaRecorder(flujo, {mimeType: tipo});
+      grabadora = tipo ? new MediaRecorder(flujo, {mimeType: tipo})
+                       : new MediaRecorder(flujo);
     } catch (e) {
       try { grabadora = new MediaRecorder(flujo); } catch (e2) {
         poner('quieto', 'Este navegador no sabe grabar. Escríbele más abajo.');
@@ -140,21 +152,18 @@
 
   async function enviarGrabacion(){
     const audio = new Blob(trozos, {type: (grabadora && grabadora.mimeType) || 'audio/webm'});
-    if (!audio.size){ poner('quieto', 'No he cogido nada. Toca y habla.'); return; }
+    // Menos de 1 KB no es una pregunta: es un envase vacio. Paso justo con el webm
+    // falso de Safari (5 bytes). Mejor decirlo aqui que mandarlo y recibir un error
+    // del que no se entiende nada.
+    if (audio.size < 1024){ poner('quieto', 'No he cogido nada. Toca y habla.'); return; }
     poner('pensando', 'Un momento…');
     try {
-      const _diag = 'tipo=' + (audio.type||'?') + ' bytes=' + audio.size
-        + ' trozos=' + trozos.length + ' rec=' + (grabadora && grabadora.mimeType);
       const r = await fetch(AGENTE + '/api/dictar', {
         method: 'POST',
         headers: {'Content-Type': audio.type || 'audio/webm'},
         body: audio,
       });
-      if (!r.ok) {
-        let _t = ''; try { _t = (await r.text()).slice(0,180); } catch(e){}
-        poner('quieto', 'DIAG ' + _diag + ' | ' + r.status + ' ' + _t);
-        return;
-      }
+      if (!r.ok) throw new Error(r.status);
       const d = await r.json();
       const pregunta = (d.texto || '').trim();
       if (!pregunta){ poner('quieto', 'No te he entendido. Prueba otra vez.'); return; }
