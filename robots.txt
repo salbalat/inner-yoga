@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://salbalat.github.io/metodo-interior/sitemap.xml
+Sitemap: https://salbalat.github.io/inner-yoga/sitemap.xml
