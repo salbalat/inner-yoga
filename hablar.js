@@ -98,11 +98,30 @@
       analizador.smoothingTimeConstant = 0.8;
       datos = new Uint8Array(analizador.frequencyBinCount);
       micro.connect(analizador);
-      // Un nodo que copia lo que entra. Corre SIN ir al altavoz: se conecta a un
-      // MediaStreamDestination (sumidero mudo), no a la salida. Antes iba a la
-      // salida con ganancia 0 y en iOS eso te hacia oirte a ti mismo todo el rato
-      // y ademas el procesador no capturaba nada.
+      // Captura preferida: AudioWorklet. Funciona en iOS Safari y en todos; el
+      // ScriptProcessor esta deprecado y en iOS NO dispara (por eso Salvador se oia
+      // a si mismo y no se transcribia). Corre en silencio: va a un
+      // MediaStreamDestination, nunca al altavoz. Si no hay worklet, cae al viejo.
+      let capturaOK = false;
       try {
+        await audioCtx.audioWorklet.addModule('captura-worklet.js');
+        const nodoW = new AudioWorkletNode(audioCtx, 'captura');
+        nodoW.port.onmessage = (ev) => {
+          if (!capturando) return;
+          const dentro = ev.data;
+          let pico = 0;
+          for (let i = 0; i < dentro.length; i++){
+            const v = Math.abs(dentro[i]);
+            if (v > pico) pico = v;
+          }
+          if (pico > nivelMax) nivelMax = pico;
+          if (pcmN < 48000 * 70){ pcm.push(dentro); pcmN += dentro.length; }
+        };
+        micro.connect(nodoW);
+        nodoW.connect(audioCtx.createMediaStreamDestination());   // corre SIN sonar
+        capturador = nodoW; capturaOK = true;
+      } catch (eW) { capturaOK = false; }
+      if (!capturaOK) try {
         capturador = audioCtx.createScriptProcessor(4096, 1, 1);
         capturador.onaudioprocess = (ev) => {
           if (!capturando) return;
