@@ -342,7 +342,7 @@
   if (vozBtn){
     vozBtn.addEventListener('click', () => {
       const sec = document.getElementById('hablar');
-      if (sec) sec.scrollIntoView({behavior:'smooth', block:'center'});
+      if (sec) sec.scrollIntoView({block:'center'});
       escuchar();
     });
   }
