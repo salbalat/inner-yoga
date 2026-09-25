@@ -334,11 +334,15 @@
       if (!v.ok) throw new Error('sin voz');
       const audio = new Audio(URL.createObjectURL(await v.blob()));
       sonando = audio;
-      // Su voz mueve los mismos anillos: el analizador pasa del micro al audio.
+      // Su voz mueve los mismos anillos, PERO va directa al altavoz. El analizador
+      // solo escucha (derivacion). Antes se conectaba el analizador al altavoz y, como
+      // el micro tambien pasa por el analizador, en la siguiente escucha te oias a ti
+      // mismo (eco, medido: mic -> analyser -> destination). Con la voz directa el
+      // micro nunca llega al altavoz.
       if (audioCtx){
         const fuente = audioCtx.createMediaElementSource(audio);
-        fuente.connect(analizador);
-        analizador.connect(audioCtx.destination);
+        fuente.connect(audioCtx.destination);   // se oye a Vero
+        fuente.connect(analizador);              // y mueve los anillos, sin arrastrar el micro
       }
       poner('hablando', 'Escucha…');
       audio.onended = () => { sonando = null; poner('quieto', 'Toca y pregúntale otra cosa.'); };
