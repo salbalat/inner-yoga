@@ -336,4 +336,14 @@
     new IntersectionObserver(es => { es[0].isIntersecting ? arrancarPintura() : pararPintura(); },
                              {threshold: 0.15}).observe(zona);
   }
+
+  // Boton flotante de voz: lleva a la seccion Hablarle y arranca la escucha (misma voz de Vero).
+  const vozBtn = document.getElementById('voz-boton');
+  if (vozBtn){
+    vozBtn.addEventListener('click', () => {
+      const sec = document.getElementById('hablar');
+      if (sec) sec.scrollIntoView({behavior:'smooth', block:'center'});
+      escuchar();
+    });
+  }
 })();

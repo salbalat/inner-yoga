@@ -554,6 +554,18 @@
   #musica-panel[hidden]{display:none}
   @media(max-width:520px){#musica-boton{right:12px;bottom:12px;padding:12px 16px}}
 
+  /* ---- boton flotante de voz (Vero) ---- */
+  #voz-boton{position:fixed;left:16px;bottom:16px;z-index:40;display:flex;
+    align-items:center;gap:9px;background:var(--marino);color:#fff;border:0;
+    padding:13px 19px;border-radius:999px;cursor:pointer;
+    font:16px "EB Garamond",Georgia,serif;letter-spacing:.03em;
+    box-shadow:0 4px 18px -6px rgba(27,58,92,.6)}
+  #voz-boton svg{width:19px;height:19px}
+  #voz-boton:active{transform:scale(.98)}
+  body.con-indice #voz-boton{bottom:66px}
+  @media(min-width:900px){body.con-indice #voz-boton{bottom:16px}}
+  @media(max-width:520px){#voz-boton{left:12px;bottom:12px;padding:12px 16px}}
+
   footer{text-align:center;font-size:12px;letter-spacing:.24em;text-transform:uppercase;
     color:var(--suave);padding:38px 22px 52px;line-height:2.3;
     border-top:1px solid var(--linea)}
@@ -888,6 +900,12 @@
   <a href="#llevatela">Llevártela</a>
 </nav>
 
+<button id="voz-boton" type="button"
+        aria-label="Preguntar hablando con la voz de Verónica"
+        title="Preguntar hablando con la voz de Verónica">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm7-3a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.92V21a1 1 0 0 0 2 0v-2.08A7 7 0 0 0 19 12Z"/></svg>
+  <span>Hablar</span>
+</button>
 <button id="musica-boton" type="button" aria-expanded="false"
         aria-controls="musica-panel" aria-label="Poner o quitar la música"
         title="Poner la música de clase">
