@@ -98,9 +98,10 @@
       analizador.smoothingTimeConstant = 0.8;
       datos = new Uint8Array(analizador.frequencyBinCount);
       micro.connect(analizador);
-      // Un nodo que copia lo que entra. Va a volumen CERO y de ahi a la salida:
-      // sin conectarlo a algun destino no se ejecuta, y a volumen normal se
-      // oiria a si misma.
+      // Un nodo que copia lo que entra. Corre SIN ir al altavoz: se conecta a un
+      // MediaStreamDestination (sumidero mudo), no a la salida. Antes iba a la
+      // salida con ganancia 0 y en iOS eso te hacia oirte a ti mismo todo el rato
+      // y ademas el procesador no capturaba nada.
       try {
         capturador = audioCtx.createScriptProcessor(4096, 1, 1);
         capturador.onaudioprocess = (ev) => {
@@ -114,11 +115,16 @@
           if (pico > nivelMax) nivelMax = pico;
           if (pcmN < 48000 * 70){ pcm.push(new Float32Array(dentro)); pcmN += dentro.length; }
         };
-        const mudo = audioCtx.createGain();
-        mudo.gain.value = 0;
         micro.connect(capturador);
-        capturador.connect(mudo);
-        mudo.connect(audioCtx.destination);
+        try {
+          const sumidero = audioCtx.createMediaStreamDestination();
+          capturador.connect(sumidero);          // pulla el procesador SIN sonar
+        } catch (e3) {
+          const mudo = audioCtx.createGain();     // respaldo antiguo si no existiera
+          mudo.gain.value = 0;
+          capturador.connect(mudo);
+          mudo.connect(audioCtx.destination);
+        }
       } catch (e) { capturador = null; }
       return true;
     } catch (e) {
