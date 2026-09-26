@@ -9,7 +9,7 @@
   </array>
   <key>metadata</key><dict>
     <key>bundle-identifier</key><string>com.okmeisson.inneryoga</string>
-    <key>bundle-version</key><string>170</string>
+    <key>bundle-version</key><string>171</string>
     <key>kind</key><string>software</string>
     <key>title</key><string>Inner Yoga</string>
   </dict>
