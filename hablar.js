@@ -11,7 +11,7 @@
   const anillos = [...document.querySelectorAll('#hablar-zona .anillo')];
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  let audioCtx = null, analizador = null, datos = null, micro = null;
+  let audioCtx = null, analizador = null, datos = null, micro = null, fuenteVoz = null;
   let animando = false, t0 = 0;
   let bandas = [0, 0, 0];          // graves, medios, agudos: cuerpo, respiracion, mente
   let fase = 'quieto';             // quieto | escuchando | pensando | hablando
@@ -340,9 +340,10 @@
       // mismo (eco, medido: mic -> analyser -> destination). Con la voz directa el
       // micro nunca llega al altavoz.
       if (audioCtx){
-        const fuente = audioCtx.createMediaElementSource(audio);
-        fuente.connect(audioCtx.destination);   // se oye a Vero
-        fuente.connect(analizador);              // y mueve los anillos, sin arrastrar el micro
+        if (fuenteVoz){ try { fuenteVoz.disconnect(); } catch (e) {} }   // no acumular nodos entre turnos
+        fuenteVoz = audioCtx.createMediaElementSource(audio);
+        fuenteVoz.connect(audioCtx.destination);   // se oye a Vero
+        fuenteVoz.connect(analizador);             // y mueve los anillos, sin arrastrar el micro
       }
       poner('hablando', 'Escucha…');
       audio.onended = () => { sonando = null; poner('quieto', 'Toca y pregúntale otra cosa.'); };
