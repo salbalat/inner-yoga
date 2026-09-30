@@ -1,6 +1,6 @@
 
 'use strict';
-const VERSION = 'ii-e3b7703aab2a';
+const VERSION = 'ii-ca700a8b401f';
 // Lo imprescindible para que la pagina abra sin red. La foto es la version de movil;
 // el mp3 de la bienvenida NO entra: son 579 KB que casi nadie escucha, y se guarda
 // solo cuando alguien lo pide.
@@ -28,6 +28,9 @@ self.addEventListener('fetch', ev => {
   if (req.method !== 'GET') return;
   // Lo de fuera (Spotify, el modelo de postura) pasa de largo sin tocarlo.
   if (new URL(req.url).origin !== location.origin) return;
+  // Los vídeos tampoco: el navegador los pide a trozos (Range) y guardar un trozo falla,
+  // y además llenarían el móvil de quien ni los ha mirado. Van directos a la red.
+  if (req.headers.has('range') || req.destination === 'video' || /\.mp4($|\?)/.test(req.url)) return;
   // La página: primero la red, para que una actualización se vea al abrirla.
   if (req.mode === 'navigate' || (req.destination === 'document')) {
     ev.respondWith((async () => {
