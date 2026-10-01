@@ -13,7 +13,7 @@
 
   let audioCtx = null, analizador = null, datos = null, micro = null, fuenteVoz = null;
   let animando = false, t0 = 0;
-  let bandas = [0, 0, 0];          // graves, medios, agudos: cuerpo, respiracion, mente
+  let bandas = [0, 0, 0];          // graves, medios, agudos: cuerpo, mente, cuerpo sutil
   let fase = 'quieto';             // quieto | escuchando | pensando | hablando
   let sonando = null;
 
