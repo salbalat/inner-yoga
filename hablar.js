@@ -316,6 +316,14 @@
       if (r.ok){ const d = await r.json(); if (d && d.answer && !d.error) texto = d.answer; }
     } catch (e) {}
 
+    // Sin pasaje que lo respalde, el agente contesta «No tengo contenido verificado».
+    // Dicho tal cual con la voz de Veronica sonaba a maquina: se dice lo mismo que la
+    // app y se ofrece preguntarselo a ella por WhatsApp.
+    let sinPasaje = false;
+    if (texto && /^no tengo contenido verificado/i.test(texto.trim())){
+      sinPasaje = true;
+      texto = 'De esto no tengo aún pasaje comprobado, y prefiero decirlo a inventarme una respuesta. Lo consultaré con Verónica. Esto te lo resuelve Verónica en un minuto.';
+    }
     if (!texto){
       // Sin servidor, las fichas de la propia pagina: las mismas 642.
       const local = (typeof buscar === 'function') ? buscar(pregunta) : [];
@@ -324,6 +332,15 @@
         : 'De esto no tengo aún pasaje comprobado. Lo consultaré con Verónica.';
     }
     suya.textContent = texto;
+    if (sinPasaje){
+      const wa = document.createElement('a');
+      wa.href = 'https://wa.me/34623393496?text=' + encodeURIComponent(
+        'Hola Verónica, le he preguntado esto a tu web y no tenía respuesta: «' + pregunta + '»');
+      wa.textContent = 'Pregúntaselo a Verónica por WhatsApp';
+      wa.style.color = 'var(--terracota-texto)'; wa.style.fontWeight = '600';   // como los demas enlaces a Veronica
+      suya.appendChild(document.createElement('br'));
+      suya.appendChild(wa);
+    }
 
     // Y lo dice con su voz, si el servidor puede.
     try {
