@@ -317,19 +317,19 @@
     } catch (e) {}
 
     // Sin pasaje que lo respalde, el agente contesta «No tengo contenido verificado».
-    // Dicho tal cual con la voz de Veronica sonaba a maquina: se dice lo mismo que la
-    // app y se ofrece preguntarselo a ella por WhatsApp.
+    // Dicho tal cual con la voz de Veronica sonaba a maquina. Desde el 03-10-2026 tampoco
+    // se dice «no tengo aun pasaje comprobado» (lo pidio Salvador): solo la frase en
+    // positivo de la app y el enlace para preguntarselo a ella por WhatsApp.
     let sinPasaje = false;
     if (texto && /^no tengo contenido verificado/i.test(texto.trim())){
       sinPasaje = true;
-      texto = 'De esto no tengo aún pasaje comprobado, y prefiero decirlo a inventarme una respuesta. Lo consultaré con Verónica. Esto te lo resuelve Verónica en un minuto.';
+      texto = 'Esto te lo resuelve Verónica en un minuto.';
     }
     if (!texto){
       // Sin servidor, las fichas de la propia pagina: las mismas 642.
       const local = (typeof buscar === 'function') ? buscar(pregunta) : [];
-      texto = local.length
-        ? local.map(f => f.a).join(' ')
-        : 'De esto no tengo aún pasaje comprobado. Lo consultaré con Verónica.';
+      if (local.length) texto = local.map(f => f.a).join(' ');
+      else { sinPasaje = true; texto = 'Esto te lo resuelve Verónica en un minuto.'; }
     }
     suya.textContent = texto;
     if (sinPasaje){
