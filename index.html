@@ -585,6 +585,51 @@
   footer a{color:inherit;text-underline-offset:3px}
   a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--petroleo);
     outline-offset:3px}
+
+  /* ---- Revisión de diseño, 03-10-2026 (Salvador: «Sí, toda») ----
+     Tono: sereno y artesano. Colores, letras, iconos y fotos son los del folleto de
+     Verónica y no se tocan: esto ordena la jerarquía y quita ruido. */
+  main h2{font-size:clamp(29px,4.4vw,38px);line-height:1.15}
+  main h2.versal{font-size:clamp(27px,4vw,34px);letter-spacing:.09em}
+  .pilar h3{font-size:18px;letter-spacing:.16em}
+  .bloque h3{font-size:19px;letter-spacing:.14em;line-height:1.35}
+  /* Las descripciones de los pilares, en letra normal: en mayúsculas cansaban. */
+  p.clave{text-transform:none;letter-spacing:.01em;font-style:normal;font-size:16.5px;line-height:1.5}
+  .accion-portada{margin-top:22px}
+  a.boton-principal{display:inline-flex;align-items:center;gap:14px;background:var(--marino);color:#FBF8F1;
+    text-decoration:none;padding:15px 26px 15px 20px;border-radius:4px;font-size:20px;line-height:1.2;
+    box-shadow:0 10px 24px -16px rgba(27,58,92,.7)}
+  a.boton-principal svg{width:24px;height:24px;flex:none}
+  a.boton-principal small{display:block;font-size:14.5px;opacity:.82;margin-top:3px}
+  a.boton-principal:hover{background:#244a73}
+  a.boton-secundario{display:inline-block;margin-top:16px;padding:12px 22px;border:1px solid var(--marino);
+    color:var(--marino);text-decoration:none;border-radius:4px;font-size:18px}
+  /* Las barras que solo adornaban, en un único tono; las que informan (asanas, índice) siguen. */
+  .chip,.respira-cita,.trabajo{border-left-color:var(--linea)}
+  /* En el móvil, «Hablar» y «Música» solo con su icono: tapan menos. */
+  @media(max-width:520px){
+    #voz-boton span,#musica-boton span{display:none}
+    #voz-boton,#musica-boton{width:52px;height:52px;padding:0;justify-content:center;border-radius:50%}
+  }
+  /* Galería: parejas a la misma altura sin recortar; en el ordenador, las sueltas no llenan la pantalla. */
+  .fotos .fila-2{display:flex;gap:14px;align-items:flex-start}
+  .fotos .fila-2 img{flex-basis:0;flex-shrink:1;min-width:0;height:auto}
+  @media(min-width:900px){.fotos .fila-1 img{max-height:74vh;width:auto;max-width:100%;margin:0 auto}}
+  /* Los vídeos, en una fila que se pasa con el dedo (en el ordenador, de tres en tres). */
+  .videos{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+  .videos video{flex:0 0 62%;min-width:0;height:auto;scroll-snap-align:start;width:auto}
+  @media(min-width:900px){.videos{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible}
+    .videos video{width:100%}}
+  /* Lectura: letras más grandes en etiquetas y pie, y líneas que no se hagan eternas. */
+  a.boton b{font-size:13px}
+  footer{font-size:14px}
+  .qr-pie,.campo-etiqueta,.grupo-cuenta,.ejes{font-size:14px}
+  .aviso,.lead{max-width:68ch}
+  #texto::placeholder{color:#6B6B6B}
+  /* Para el dedo: más zona de toque en los enlaces pequeños; el contacto del pie, igualado. */
+  footer a{display:inline-block;padding:10px 6px}
+  .detalle-musica a{display:inline-block;padding:12px 4px;margin:-12px -4px}
+  .contacto .botones .boton{min-width:300px;justify-content:center}
 </style>
 </head>
 <body>
@@ -615,51 +660,13 @@
       </div>
       <p class="cursiva">Un método personalizado para conocerte, cuidarte y evolucionar a tu ritmo.</p>
       <div class="cred">30 años de experiencia<br>Formación en India<br>Certificación Yoga Alliance<br>Formación en meditación Vipassana</div>
-      <div class="botones" style="justify-content:flex-start">
-        <a class="boton" href="https://wa.me/34623393496">
-          <span class="punto wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.9-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.1.1.6-.1 1.3Z"/></svg></span>
-          <span><b>WhatsApp</b>623 393 496</span></a>
+      <div class="accion-portada">
+        <a class="boton-principal" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20tus%20clases.">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.9-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.5-1.2-2.9s.7-2 1-2.3c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.2.4-.2.6-.1l2 .9c.2.1.4.2.4.3.1.1.1.6-.1 1.3Z"/></svg>
+          <span>Escribir a Verónica<small>por WhatsApp, al 623 393 496</small></span></a>
       </div>
     </div>
   </div>
-
-  <section id="saludo">
-    <div class="saludo">
-      <button id="oir-bienvenida" type="button"
-              aria-label="Escuchar la bienvenida de Verónica Sukha">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-      </button>
-      <div>
-        <b>Escucha a Verónica Sukha</b>
-        <p>Te cuenta en medio minuto qu&eacute; es Inner Yoga y qu&eacute;
-           puedes hacer aqu&iacute;.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="hablar">
-    <h2>Dile algo</h2>
-    <p class="cursiva">Preg&uacute;ntale con tu voz. Te contesta con la suya.</p>
-    <div class="filete"></div>
-
-    <div id="hablar-zona" tabindex="0" role="button" data-fase="quieto"
-         aria-label="Tocar para hablar con Ver&oacute;nica">
-      <div class="escena-voz">
-        <span class="anillo a-cuerpo"></span>
-        <span class="anillo a-respiracion"></span>
-        <span class="anillo a-mente"></span>
-        <canvas id="hablar-lienzo"></canvas>
-        <svg class="senal" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z"/><path d="M18 11a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.9V22h2v-3.1A8 8 0 0 0 20 11h-2Z"/></svg>
-      </div>
-      <p id="hablar-estado">Toca y preg&uacute;ntale lo que quieras.</p>
-    </div>
-
-    <div id="hablar-hilo" aria-live="polite"></div>
-    <p class="aviso">Los tres c&iacute;rculos son sus tres pilares &mdash; cuerpo,
-       mente y cuerpo sutil &mdash; y se mueven con el sonido real de tu voz
-       mientras hablas, y con la suya cuando contesta. Si prefieres escribir, tienes el
-       asistente justo debajo.</p>
-  </section>
 
   <section>
     <h2 class="versal">Método Interior</h2>
@@ -712,6 +719,7 @@
         </header>
         <p>La meditación nos enseña a observar lo que sucede en nuestro cuerpo y en nuestra mente sin reaccionar automáticamente.</p><p>A través de la práctica meditativa y la consciencia, cultivamos presencia, atención y autoconocimiento.</p><p>Una herramienta para aprender a relacionarnos de otra manera con nuestros pensamientos, emociones y experiencias.</p>
         <p class="cierre">Más consciencia. Menos automatismos.</p>
+        
       </article>
 
       <article class="bloque">
@@ -723,6 +731,7 @@
         </header>
         <p>La respiración es un puente entre el cuerpo y la mente. A través de la respiración consciente y el Pranayama, podemos favorecer la regulación del sistema nervioso, cultivar la calma, desarrollar mayor presencia y claridad mental.</p><p>Una respiración consciente puede contribuir a una mejor relación entre la oxigenación, circulación y energía celular, favoreciendo la armonía.</p>
         <p class="cierre">Cuando cambias tu respiración, cambia tu estado.</p>
+        
       </article>
 
       <article class="bloque">
@@ -734,7 +743,46 @@
         </header>
         <p>Sesiones diseñadas para tus objetivos, necesidades y momento vital, tanto en clases particulares como en grupos y empresas.</p>
         <p class="cierre">Un acompañamiento personalizado para integrar lo aprendido en el día a día, creando tu propio healthy lifestyle.</p>
+        <a class="boton-secundario" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20tus%20clases.">Escribir a Verónica</a>
       </article></div>
+  </section>
+
+  <section id="saludo">
+    <div class="saludo">
+      <button id="oir-bienvenida" type="button"
+              aria-label="Escuchar la bienvenida de Verónica Sukha">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div>
+        <b>Escucha a Verónica Sukha</b>
+        <p>Te cuenta en medio minuto qu&eacute; es Inner Yoga y qu&eacute;
+           puedes hacer aqu&iacute;.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="hablar">
+    <h2>Dile algo</h2>
+    <p class="cursiva">Preg&uacute;ntale con tu voz. Te contesta con la suya.</p>
+    <div class="filete"></div>
+
+    <div id="hablar-zona" tabindex="0" role="button" data-fase="quieto"
+         aria-label="Tocar para hablar con Ver&oacute;nica">
+      <div class="escena-voz">
+        <span class="anillo a-cuerpo"></span>
+        <span class="anillo a-respiracion"></span>
+        <span class="anillo a-mente"></span>
+        <canvas id="hablar-lienzo"></canvas>
+        <svg class="senal" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z"/><path d="M18 11a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.9V22h2v-3.1A8 8 0 0 0 20 11h-2Z"/></svg>
+      </div>
+      <p id="hablar-estado">Toca y preg&uacute;ntale lo que quieras.</p>
+    </div>
+
+    <div id="hablar-hilo" aria-live="polite"></div>
+    <p class="aviso">Los tres c&iacute;rculos son sus tres pilares &mdash; cuerpo,
+       mente y cuerpo sutil &mdash; y se mueven con el sonido real de tu voz
+       mientras hablas, y con la suya cuando contesta. Si prefieres escribir, tienes el
+       asistente justo debajo.</p>
   </section>
 
   <section id="preguntar">
@@ -789,8 +837,8 @@
     <div class="filete"></div>
     <div class="fotos">
       <div class="fila fila-1"><img src="assets/fotos/foto-1-bailarin.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"></div>
-      <div class="fila fila-2"><img src="assets/fotos/foto-2-playa-camello.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"><img src="assets/fotos/foto-3-playa-vela.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"></div>
-      <div class="fila fila-2"><img src="assets/fotos/foto-4-rueda.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"><img src="assets/fotos/foto-5-piernas-abiertas.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"></div>
+      <div class="fila fila-2"><img style="flex-grow:1.268" src="assets/fotos/foto-2-playa-camello.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"><img style="flex-grow:0.985" src="assets/fotos/foto-3-playa-vela.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"></div>
+      <div class="fila fila-2"><img style="flex-grow:0.750" src="assets/fotos/foto-4-rueda.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"><img style="flex-grow:0.828" src="assets/fotos/foto-5-piernas-abiertas.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"></div>
       <div class="fila fila-1"><img src="assets/fotos/foto-6-jardin.jpg" loading="lazy" decoding="async" alt="Verónica Sukha practicando yoga"></div>
     </div>
     <div class="videos">
