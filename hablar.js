@@ -326,10 +326,9 @@
       texto = 'Esto te lo resuelve Verónica en un minuto.';
     }
     if (!texto){
-      // Sin servidor, las fichas de la propia pagina: las mismas 642.
-      const local = (typeof buscar === 'function') ? buscar(pregunta) : [];
-      if (local.length) texto = local.map(f => f.a).join(' ');
-      else { sinPasaje = true; texto = 'Esto te lo resuelve Verónica en un minuto.'; }
+      // Sin agente, nunca las fichas de la propia pagina: puntuan por palabras sueltas y
+      // sacaban textos que no venian a cuento (Salvador: «cierralo del todo», 03-10-2026).
+      sinPasaje = true; texto = 'Esto te lo resuelve Verónica en un minuto.';
     }
     suya.textContent = texto;
     if (sinPasaje){

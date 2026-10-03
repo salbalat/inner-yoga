@@ -956,16 +956,17 @@ const WA = "https://wa.me/34623393496";
 // Mismo patrón que OnYour move: lo pesado vive en MEISSON y sale por el funnel
 // compartido, por ruta (allí es /onyourmove-archivos). Como el funnel da HTTPS, la web
 // puede llamarlo sin que el navegador lo bloquee por mezclar http con https.
-// Si el servidor responde, el modelo elige la ficha y acierta mucho más; si no está,
-// se responde con las fichas que lleva esta misma página.
+// Si el servidor responde, el modelo elige la ficha. Si no está o no tiene pasaje, se
+// invita a preguntárselo a Verónica (desde el 03-10-2026, nunca fichas sueltas).
 const AGENTE = "https://ingenieria-interior.vercel.app";
 
 async function preguntarAlServidor(mensaje){
   try {
     const ctrl = new AbortController();
-    // 6s: el servidor sano tarda entre 0,5 y 3. Si no esta, mas vale contestar ya
-    // con las fichas de la propia pagina que tener al usuario esperando.
-    const reloj = setTimeout(() => ctrl.abort(), 6000);
+    // 15 s: el agente sano tarda entre 0,5 y 3, pero al arrancar en frio puede tardar
+    // mas. Desde el 03-10-2026 ya no hay respuesta de reserva con las fichas de la
+    // pagina, asi que mas vale esperarle un poco que mandar a preguntar a Veronica.
+    const reloj = setTimeout(() => ctrl.abort(), 15000);
     const r = await fetch(AGENTE + "/api/publico", {
       method: "POST", signal: ctrl.signal,
       headers: {"Content-Type": "application/json"},
@@ -1118,20 +1119,10 @@ async function responder(pregunta){
     return;
   }
 
-  const r = buscar(pregunta);
-  if (!r.length) {
-    sinPasaje(caja, pregunta);
-  } else {
-    r.forEach((f,i) => {
-      const b = nodo('div', i ? 'otra' : null);
-      b.appendChild(nodo('p', null, f.a));
-      const fu = nodo('span','fuente', f.b + (f.au ? ' · ' + f.au : '') + ' — ' + f.l);
-      if (!f.h) fu.appendChild(nodo('span','auto',' · verificación automática'));
-      b.appendChild(fu);
-      caja.appendChild(b);
-    });
-    ponerEscucha(caja, r.map(f => f.a).join(' '));
-  }
+  // Sin agente, nunca las fichas de la propia página como respuesta: puntúan por palabras
+  // sueltas y sacaban textos que no venían a cuento (Salvador: «ciérralo del todo»,
+  // 03-10-2026). buscar() sigue sirviendo para marcar en verde las asanas de la secuencia.
+  sinPasaje(caja, pregunta);
   // El turno y la caja ya están puestos arriba, antes de preguntar al servidor.
   caja.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
