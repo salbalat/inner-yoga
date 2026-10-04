@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&text=%E0%A4%97%E0%A4%AF%E0%A5%8B&display=swap">
 <link rel="icon" href="assets/icono.png">
 <link rel="canonical" href="https://myinneryoga.com/">
 <link rel="manifest" href="manifest.webmanifest">
@@ -475,10 +476,13 @@
   .como h3{font-size:19px;color:var(--marino);margin:0 0 6px;letter-spacing:.03em}
   .como p{font-size:16px;margin:0}
 
-  /* ---- cierre ---- */
-  .cita-grande{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;
-    font-size:clamp(23px,3.4vw,33px);line-height:1.42;color:var(--marino);
-    text-align:center;margin:0 auto;max-width:30ch}
+  /* ---- cierre: qué es el yoga (04-10-2026, en lugar de la cita) ---- */
+  .yoga{max-width:36em;margin:0 auto;text-align:center}
+  .yoga p{margin:0 0 12px}
+  .yoga [lang="sa"]{font-family:"Tiro Devanagari Sanskrit","Kohinoor Devanagari","Noto Serif Devanagari",serif}
+  .yoga .yoga-cierre{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;
+    font-size:clamp(22px,2.9vw,29px);line-height:1.42;color:var(--marino);
+    margin:26px auto 0;max-width:32ch;text-wrap:pretty}
   /* ---- en la esterilla: primero sus fotos (una o dos por fila) y luego los vídeos ---- */
   .fotos{display:grid;gap:14px;margin:6px 0 26px}
   .fila{display:grid;gap:14px;align-items:center}
@@ -951,7 +955,11 @@
   </section>
 
   <section>
-    <p class="cita-grande">&laquo;El yoga se vive diferente en cada persona. Por eso, tu práctica también debería ser única.&raquo;</p>
+    <div class="yoga">
+      <p>«Yoga» viene del sánscrito <span lang="sa">योग</span> (yoga), relacionado con la raíz √yuj, que significa «unir», «yugar» o «conectar».</p>
+      <p>En sentido tradicional, se refiere a la unión o integración del cuerpo, la mente y, según la escuela filosófica, la conciencia o el alma.</p>
+      <p class="yoga-cierre">Yoga es una filosofía, un estilo de vida, una práctica física… cada uno lo integra y vive de una manera, por eso tu práctica debería ser única. Inner Yoga te ayuda a encontrar tu fuerza interior, para conseguir la mejor versión de ti.</p>
+    </div>
   </section>
 
   <section class="contacto">

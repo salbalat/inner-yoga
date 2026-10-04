@@ -17,7 +17,7 @@
     const candidatos = document.querySelectorAll(
       'section > h2, section > .cursiva, section > .lead, .filete, .rejilla, .cifras,' +
       ' .pasos, .promesas, .chips, .campo, .qr-caja, .como, .grupo, .disco-caja,' +
-      ' .cita-grande, .contacto .llamada, .contacto .nombre, .contacto .botones,' +
+      ' .contacto .llamada, .contacto .nombre, .contacto .botones,' +
       ' #respira-zona, .postura-mandos, .trabajo, ul.ayuda');
 
     const porSeccion = new Map();
