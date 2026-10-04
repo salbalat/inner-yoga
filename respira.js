@@ -85,18 +85,11 @@ if (lienzo) {
       + 'Tu respiración de hoy, en este momento y sentado frente a una pantalla.';
     salida.append(lectura);
 
-    // Cierra con un pasaje comprobado, no con una frase mia.
-    const ficha = (typeof FICHAS !== 'undefined')
-      ? FICHAS.find(f => /esfuerzo no es controlar la respiraci/i.test(f.a || ''))
-        || FICHAS.find(f => (f.t||[]).includes('respiracion') && f.b === 'El método de Verónica')
-      : null;
-    if (ficha){
-      const cita = document.createElement('blockquote'); cita.className = 'respira-cita';
-      cita.textContent = ficha.a;
-      const pie = document.createElement('cite');
-      pie.textContent = ficha.b + (ficha.au ? ' · ' + ficha.au : '') + ' — ' + ficha.l;
-      cita.append(pie); salida.append(cita);
-    }
+    // 04-10-2026 (Salvador): cierra con una frase de Verónica, de su folleto. Antes era la
+    // cita de un libro con su autor; sin el autor serían palabras de otra persona en su boca.
+    const cita = document.createElement('blockquote'); cita.className = 'respira-cita';
+    cita.textContent = "La respiración es un puente entre el cuerpo y la mente.";
+    salida.append(cita);
     salida.hidden = false;
     if (navigator.vibrate && !quieto) navigator.vibrate([10, 40, 10]);
   }

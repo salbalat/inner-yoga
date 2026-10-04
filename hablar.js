@@ -319,26 +319,29 @@
     // Sin pasaje que lo respalde, el agente contesta «No tengo contenido verificado».
     // Dicho tal cual con la voz de Veronica sonaba a maquina. Desde el 03-10-2026 tampoco
     // se dice «no tengo aun pasaje comprobado» (lo pidio Salvador): solo la frase en
-    // positivo de la app y el enlace para preguntarselo a ella por WhatsApp.
+    // positivo de la app y el enlace para preguntarselo a ella por WhatsApp. Desde el
+    // 04-10-2026 lo dice ella, en primera persona (Salvador: que no hable de si misma en
+    // tercera persona), y «escribeme por WhatsApp» es el propio enlace.
+    const SIN_RESPUESTA = 'Esto prefiero contártelo yo en persona: escríbeme por WhatsApp y lo hablamos.';
     let sinPasaje = false;
     if (texto && /^no tengo contenido verificado/i.test(texto.trim())){
       sinPasaje = true;
-      texto = 'Esto te lo resuelve Verónica en un minuto.';
+      texto = SIN_RESPUESTA;
     }
     if (!texto){
       // Sin agente, nunca las fichas de la propia pagina: puntuan por palabras sueltas y
       // sacaban textos que no venian a cuento (Salvador: «cierralo del todo», 03-10-2026).
-      sinPasaje = true; texto = 'Esto te lo resuelve Verónica en un minuto.';
+      sinPasaje = true; texto = SIN_RESPUESTA;
     }
-    suya.textContent = texto;
     if (sinPasaje){
       const wa = document.createElement('a');
       wa.href = 'https://wa.me/34623393496?text=' + encodeURIComponent(
         'Hola Verónica, le he preguntado esto a tu web y no tenía respuesta: «' + pregunta + '»');
-      wa.textContent = 'Pregúntaselo a Verónica por WhatsApp';
+      wa.textContent = 'escríbeme por WhatsApp';
       wa.style.color = 'var(--terracota-texto)'; wa.style.fontWeight = '600';   // como los demas enlaces a Veronica
-      suya.appendChild(document.createElement('br'));
-      suya.appendChild(wa);
+      suya.replaceChildren('Esto prefiero contártelo yo en persona: ', wa, ' y lo hablamos.');
+    } else {
+      suya.textContent = texto;
     }
 
     // Y lo dice con su voz, si el servidor puede.

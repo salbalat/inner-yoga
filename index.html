@@ -805,10 +805,10 @@
       <input id="texto" type="text" placeholder="Escribe tu pregunta" autocomplete="off">
       <button id="enviar">Preguntar</button>
     </div>
-    <p class="aviso">Responde con pasajes de libros comprobados uno a uno y con el
-       m&eacute;todo de Ver&oacute;nica. Lo que no tenga, lo consulta con ella. Si hay dolor,
-       lesi&oacute;n o embarazo, te manda a hablar con ella: esto no sustituye una clase
-       ni es consejo m&eacute;dico.</p>
+    <p class="aviso">Te contesta un asistente autom&aacute;tico con mi voz y mi m&eacute;todo.
+       Lo que no sepa, preg&uacute;ntamelo por WhatsApp. Si hay dolor, una lesi&oacute;n o un
+       embarazo, h&aacute;blalo conmigo antes: esto no sustituye una clase ni es consejo
+       m&eacute;dico.</p>
     <div id="hilo"></div>
   </section>
 
@@ -861,10 +861,9 @@
 
   <section id="secuencia">
     <h2>La secuencia</h2>
-    <p class="cursiva">Las asanas con pasaje comprobado en los textos, por grupos.</p>
+    <p class="cursiva">Las asanas del hatha yoga, por grupos.</p>
     <div class="filete"></div>
-    <p class="lead">Toca cualquiera para preguntar por ella.
-       <span id="secuencia-cuenta"></span></p>
+    <p class="lead">Toca cualquiera y te cuento sobre ella.</p>
     <div class="grupos">
       <article class="grupo">
         <header>
@@ -1121,12 +1120,13 @@ const texto = document.getElementById('texto');
 
 // Cuando no hay pasaje: la frase en positivo de la app y el enlace para preguntárselo a
 // Verónica por WhatsApp, con la pregunta ya escrita. Sin el «no tengo aún pasaje
-// comprobado», que Salvador pidió quitar el 03-10-2026.
+// comprobado», que Salvador pidió quitar el 03-10-2026. Desde el 04-10-2026 lo dice ella,
+// en primera persona, y «escríbeme por WhatsApp» es el propio enlace.
 function sinPasaje(caja, pregunta){
-  const a = nodo('div','nada','Esto te lo resuelve Verónica en un minuto. ');
-  const enl = nodo('a', null, 'Pregúntaselo a Verónica por WhatsApp');
+  const a = nodo('div','nada','Esto prefiero contártelo yo en persona: ');
+  const enl = nodo('a', null, 'escríbeme por WhatsApp');
   enl.href = WA + '?text=' + encodeURIComponent('Hola Verónica, le he preguntado esto a la web y no tenía respuesta: «' + pregunta + '»');
-  a.appendChild(enl);
+  a.append(enl, ' y lo hablamos.');
   caja.appendChild(a);
 }
 
@@ -1154,21 +1154,12 @@ async function responder(pregunta){
     return;
   }
   if (respuesta) {
-    if (!respuesta.conFuente) {
-      caja.appendChild(nodo('div','sin-fuente',
-        'Orientación general: esto NO sale de ningún libro comprobado. '
-        + 'Para tu caso, pregúntale a Verónica.'));
-    }
+    // 04-10-2026: sin el aviso amarillo «esto NO sale de ningún libro comprobado» ni la
+    // línea de la fuente debajo: el asistente ya no cita libros (Salvador). Cada línea de
+    // la respuesta, un párrafo.
     const SALTO = String.fromCharCode(10);
-    for (const bloque of respuesta.texto.split(SALTO + SALTO)) {
-      const lineas = bloque.split(SALTO);
-      caja.appendChild(nodo('p', null, lineas[0]));
-      for (const extra of lineas.slice(1)) {
-        const auto = extra.includes('(verificaci\u00f3n autom\u00e1tica)');
-        const fu = nodo('span','fuente', extra.replace(' (verificaci\u00f3n autom\u00e1tica)',''));
-        if (auto) fu.appendChild(nodo('span','auto',' \u00b7 verificaci\u00f3n autom\u00e1tica'));
-        caja.appendChild(fu);
-      }
+    for (const linea of respuesta.texto.split(SALTO)) {
+      if (linea.trim()) caja.appendChild(nodo('p', null, linea));
     }
     ponerEscucha(caja, respuesta.texto);
     caja.scrollIntoView({behavior:'smooth', block:'nearest'});
@@ -1284,22 +1275,14 @@ try { if (localStorage.getItem('musica') === '1') ponerMusica(true); } catch (e)
 // Las asanas de la secuencia preguntan al asistente, que esta mas arriba en la pagina.
 // Antes de que nadie toque nada, se marca cuales tienen respuesta: descubrirlo
 // fallando una por una es lo peor que puede hacer una lista de 67 botones.
+// 04-10-2026: sin contar «pasajes en los textos» (Salvador: sin referencias a libros).
 (function(){
-  let conRespuesta = 0;
   document.querySelectorAll('.asana').forEach(b => {
     const hay = buscar('¿Qué es ' + b.dataset.asana + '?').length > 0;
     b.dataset.hay = hay ? 'si' : 'no';
-    if (hay) conRespuesta++;
-    b.title = hay ? 'Hay pasajes de los textos sobre esta postura'
-                  : 'De esta todavía no hay pasaje comprobado; lo consultará con Verónica';
+    b.title = hay ? 'Toca y te cuento'
+                  : 'De esta todavía no puedo contarte nada aquí: pregúntamelo por WhatsApp';
   });
-  const marcador = document.getElementById('secuencia-cuenta');
-  const total = document.querySelectorAll('.asana').length;
-  if (marcador) marcador.textContent = !conRespuesta
-    ? 'De ninguna hay todavía pasajes comprobados en los textos.'
-    : conRespuesta === total
-      ? (total === 1 ? 'Tiene pasaje en los textos.' : 'Las ' + total + ' tienen pasaje en los textos.')
-      : 'De ' + conRespuesta + ' hay pasajes en los textos, marcadas en verde. Del resto, todavía no.';
 })();
 
 document.querySelectorAll('.asana').forEach(b => b.onclick = () => {
