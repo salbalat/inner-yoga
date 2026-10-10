@@ -1,10 +1,10 @@
 
 'use strict';
-const VERSION = 'ii-792ae372b15d';
+const VERSION = 'ii-a9906dd4f0ff';
 // Lo imprescindible para que la pagina abra sin red. La foto es la version de movil;
 // el mp3 de la bienvenida NO entra: son 579 KB que casi nadie escucha, y se guarda
 // solo cuando alguien lo pide.
-const ESENCIALES = ['./', './index.html', './postura.js', './respira.js',
+const ESENCIALES = ['./', './index.html', './postura.js',
                     './movimiento.js', './hablar.js', './captura-worklet.js', './manifest.webmanifest',
                     './assets/veronica-rio-860.webp', './assets/icono.png'];
 
