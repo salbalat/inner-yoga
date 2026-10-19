@@ -484,6 +484,19 @@
   .como article{background:var(--papel);border:1px solid var(--linea-fina);padding:18px 20px}
   .como h3{font-size:19px;color:var(--marino);margin:0 0 6px;letter-spacing:.03em}
   .como p{font-size:16px;margin:0}
+  /* 19-10-2026: en el móvil, botón y pasos; en el ordenador, el QR y las tres tarjetas. */
+  .solo-movil{display:none}
+  @media (hover:none) and (pointer:coarse){
+    .solo-movil{display:block}
+    .solo-ordenador{display:none}
+  }
+  .llevar .boton-foto{width:100%;margin:4px 0 14px}
+  .llevar-ya{font-size:17px;color:var(--marino);margin:0 0 14px}
+  .llevar-pasos{background:var(--papel);border:1px solid var(--linea-fina);margin:0;
+    padding:16px 20px 16px 38px;font-size:16.5px;line-height:1.6}
+  .llevar-pasos li{margin:0 0 8px}
+  .llevar-pasos .ico{width:22px;height:22px;vertical-align:-5px;color:var(--petroleo)}
+  .llevar-pasos .llevar-nota{list-style:none;margin:10px 0 0 -18px;color:var(--suave);font-style:italic;font-size:15px}
 
   /* ---- cierre: qué es el yoga (04-10-2026, en lugar de la cita) ---- */
   .yoga{max-width:36em;margin:0 auto;text-align:center}
@@ -1015,14 +1028,33 @@
   <section id="llevatela">
     <h2>Ll&eacute;vatela en el m&oacute;vil</h2>
     <div class="filete"></div>
-    <p class="lead">No hace falta descargar nada de ninguna tienda: apunta con la
+    <p class="lead solo-ordenador">No hace falta descargar nada de ninguna tienda: apunta con la
        c&aacute;mara del m&oacute;vil a este c&oacute;digo y a&ntilde;&aacute;dela a la
        pantalla de inicio. Se abre como una app y funciona tambi&eacute;n sin cobertura.</p>
-    <div class="qr-caja">
+    <!-- 19-10-2026: en el móvil el QR no sirve (no se escanea la pantalla en la que se mira) y
+         Verónica no encontraba con qué llevársela. Botón en el móvil; el QR, solo en el ordenador. -->
+    <div class="solo-movil llevar">
+      <p class="lead">No hace falta descargar nada de ninguna tienda: qu&eacute;datela en la
+         pantalla de inicio. Se abre como una app y funciona tambi&eacute;n sin cobertura.</p>
+      <button class="boton-foto" id="llevar" type="button">Ll&eacute;vatela a tu pantalla de inicio</button>
+      <p class="llevar-ya" id="llevar-ya" hidden>Ya la tienes en tu pantalla de inicio.</p>
+      <ol class="llevar-pasos" id="pasos-iphone" hidden>
+        <li>Toca <b>Compartir</b> <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-label="(el cuadrado con la flecha hacia arriba)"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5v10h14V11h-1"/></svg>
+            en Safari. Si no lo ves, toca antes los tres puntos <b>&middot;&middot;&middot;</b></li>
+        <li>Elige <b>A&ntilde;adir a pantalla de inicio</b> <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-label="(el cuadrado con un más)"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg></li>
+        <li>Toca <b>A&ntilde;adir</b>. El icono de Inner Yoga aparece con tus apps.</li>
+        <li class="llevar-nota">Si la est&aacute;s viendo dentro del correo o de WhatsApp, &aacute;brela primero en Safari.</li>
+      </ol>
+      <ol class="llevar-pasos" id="pasos-android" hidden>
+        <li>En <b>Chrome</b>, toca el men&uacute; de los tres puntos <b>&#8942;</b></li>
+        <li>Elige <b>A&ntilde;adir a pantalla de inicio</b> o <b>Instalar app</b>.</li>
+      </ol>
+    </div>
+    <div class="qr-caja solo-ordenador">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path stroke="#1f3d5c" d="M2 2.5h7m1 0h1m4 0h2m3 0h7m-25 1h1m5 0h1m2 0h1m1 0h4m1 0h1m1 0h1m5 0h1m-25 1h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m4 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m3 0h1m2 0h3m2 0h1m1 0h3m1 0h1m-25 1h1m1 0h3m1 0h1m3 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-25 1h1m5 0h1m1 0h1m3 0h1m3 0h1m1 0h1m5 0h1m-25 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-16 1h1m1 0h1m2 0h1m-15 1h1m1 0h1m3 0h2m1 0h1m1 0h2m1 0h1m4 0h1m2 0h1m1 0h1m-25 1h3m1 0h1m2 0h4m1 0h2m1 0h5m1 0h1m1 0h2m-24 1h3m1 0h2m1 0h1m2 0h1m3 0h3m2 0h3m1 0h1m-23 1h1m2 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m-21 1h1m1 0h1m2 0h5m1 0h1m2 0h1m2 0h2m4 0h1m-23 1h3m4 0h2m1 0h1m2 0h2m1 0h2m3 0h2m-25 1h2m1 0h2m1 0h1m3 0h1m1 0h1m1 0h2m1 0h1m3 0h2m1 0h1m-22 1h2m2 0h6m1 0h1m1 0h2m1 0h3m-22 1h2m3 0h2m2 0h2m1 0h1m2 0h6m2 0h1m-16 1h1m1 0h1m2 0h1m2 0h1m3 0h1m3 0h1m-25 1h7m1 0h2m1 0h2m3 0h1m1 0h1m1 0h1m3 0h1m-25 1h1m5 0h1m2 0h1m4 0h3m3 0h1m-21 1h1m1 0h3m1 0h1m3 0h3m2 0h6m2 0h1m-24 1h1m1 0h3m1 0h1m6 0h1m2 0h2m2 0h1m1 0h2m-24 1h1m1 0h3m1 0h1m1 0h4m1 0h1m3 0h1m1 0h3m1 0h2m-25 1h1m5 0h1m4 0h2m1 0h1m1 0h5m-21 1h7m1 0h3m1 0h1m1 0h1m1 0h2m3 0h1m2 0h1"/></svg>
       <span class="qr-pie">https://myinneryoga.com/</span>
     </div>
-    <div class="como">
+    <div class="como solo-ordenador">
       <article>
         <h3>iPhone</h3>
         <p>En <b>Safari</b>: toca <b>Compartir</b> y luego
@@ -1265,6 +1297,31 @@ async function responder(pregunta){
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
+
+// 19-10-2026: el botón «Llévatela a tu pantalla de inicio». En Android, Chrome deja instalarla
+// con un toque (beforeinstallprompt); en el iPhone Apple no lo deja hacer desde la web, así que
+// se abren los pasos. Si ya se abre desde la pantalla de inicio, se dice y no hay botón.
+(function(){
+  const boton = document.getElementById('llevar');
+  if (!boton) return;
+  const yaEsApp = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  if (yaEsApp) { boton.hidden = true; document.getElementById('llevar-ya').hidden = false; return; }
+  const esIphone = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+                   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  let aviso = null;
+  window.addEventListener('beforeinstallprompt', ev => { ev.preventDefault(); aviso = ev; });
+  boton.onclick = async () => {
+    if (aviso) {
+      aviso.prompt();
+      try { await aviso.userChoice; } catch (e) {}
+      aviso = null;
+      return;
+    }
+    const pasos = document.getElementById(esIphone ? 'pasos-iphone' : 'pasos-android');
+    pasos.hidden = !pasos.hidden;
+    if (!pasos.hidden) pasos.scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
+})();
 
 document.querySelectorAll('.chip').forEach(c => c.onclick = () => responder(c.textContent));
 

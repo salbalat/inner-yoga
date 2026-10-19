@@ -1,6 +1,6 @@
 
 'use strict';
-const VERSION = 'ii-daff9f9e963e';
+const VERSION = 'ii-a9457e1b5f41';
 // Lo imprescindible para que la pagina abra sin red. La foto es la version de movil;
 // el mp3 de la bienvenida NO entra: son 579 KB que casi nadie escucha, y se guarda
 // solo cuando alguien lo pide.
