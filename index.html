@@ -433,6 +433,16 @@
   .c-borde-oliva{border-left-color:var(--oliva)}
   .c-borde-petroleo{border-left-color:var(--petroleo)}
   .c-borde-terracota{border-left-color:var(--terracota)}
+  /* 19-10-2026: la ficha de las asanas de la tabla de Verónica se abre debajo de su grupo. */
+  .asana-ficha{margin:12px 0 0;background:var(--papel);border-left:3px solid var(--petroleo);
+    padding:12px 14px;font-size:16px;line-height:1.55;color:var(--texto)}
+  .asana-ficha b{color:var(--marino);font-weight:600}
+  .asana-ficha span{display:block;color:var(--suave);font-style:italic}
+  .nombres{margin-top:30px;border-top:1px solid var(--linea);padding-top:14px}
+  .nombres h3{font-size:17px;color:var(--marino);text-transform:uppercase;letter-spacing:.07em;margin:0 0 10px}
+  .nombres ul{list-style:none;margin:0;padding:0;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 16px;font-size:15.5px}
+  .nombres b{color:var(--marino);font-weight:600}
 
   /* ---- tu postura ---- */
   .postura-mandos{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 12px}
@@ -865,7 +875,107 @@
           <button class="asana c-borde-terracota" data-asana="Viparita Karani"><span class="asana-nombre">Viparita Karani</span></button>
         </div>
         
+      </article>
+      <article class="grupo">
+        <header>
+          <h3>De pie</h3>
+          <span class="grupo-sub">Asanas de pie</span>
+          <span class="grupo-cuenta">5</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-oliva" data-tabla="1" data-asana="Tadasana" data-traduccion="Postura de la montaña" data-beneficio="Mejora la postura, equilibrio y conciencia corporal"><span class="asana-nombre">Tadasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Trikonasana" data-traduccion="Postura del triángulo" data-beneficio="Estira piernas y costados, mejora movilidad de caderas"><span class="asana-nombre">Trikonasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Utthita Parsvakonasana" data-traduccion="Ángulo lateral extendido" data-beneficio="Fortalece piernas y abre caderas y tórax"><span class="asana-nombre">Utthita Parsvakonasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Virabhadrasana I" data-traduccion="Guerrero I" data-beneficio="Fortalece piernas, abre caderas y pecho"><span class="asana-nombre">Virabhadrasana I</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Virabhadrasana II" data-traduccion="Guerrero II" data-beneficio="Mejora resistencia, estabilidad y apertura de caderas"><span class="asana-nombre">Virabhadrasana II</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Equilibrio</h3>
+          <span class="grupo-sub">Asanas de equilibrio</span>
+          <span class="grupo-cuenta">1</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-petroleo" data-tabla="1" data-asana="Vrksasana" data-traduccion="Postura del árbol" data-beneficio="Mejora concentración, estabilidad y fuerza en piernas"><span class="asana-nombre">Vrksasana</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Sentadas</h3>
+          <span class="grupo-sub">Asanas sentadas</span>
+          <span class="grupo-cuenta">5</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-terracota" data-tabla="1" data-asana="Dandasana" data-traduccion="Postura del bastón" data-beneficio="Mejora alineación y fortalece espalda"><span class="asana-nombre">Dandasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Sukhasana" data-traduccion="Postura fácil" data-beneficio="Favorece relajación, respiración y meditación"><span class="asana-nombre">Sukhasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Padmasana" data-traduccion="Loto" data-beneficio="Favorece estabilidad y concentración"><span class="asana-nombre">Padmasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Baddha Konasana" data-traduccion="Ángulo ligado" data-beneficio="Abre ingles y caderas"><span class="asana-nombre">Baddha Konasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Upavistha Konasana" data-traduccion="Ángulo sentado abierto" data-beneficio="Estira aductores e isquiotibiales"><span class="asana-nombre">Upavistha Konasana</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Flexiones</h3>
+          <span class="grupo-sub">Flexiones hacia delante</span>
+          <span class="grupo-cuenta">4</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-oliva" data-tabla="1" data-asana="Parsvottanasana" data-traduccion="Estiramiento lateral intenso" data-beneficio="Estira isquiotibiales y mejora equilibrio"><span class="asana-nombre">Parsvottanasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Uttanasana" data-traduccion="Flexión intensa de pie" data-beneficio="Estira la parte posterior de las piernas y relaja"><span class="asana-nombre">Uttanasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Paschimottanasana" data-traduccion="Pinza sentada" data-beneficio="Estira toda la cadena posterior y favorece calma"><span class="asana-nombre">Paschimottanasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Janu Sirsasana" data-traduccion="Cabeza a la rodilla" data-beneficio="Estira espalda, piernas e ingles"><span class="asana-nombre">Janu Sirsasana</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Torsión</h3>
+          <span class="grupo-sub">Asanas de torsión</span>
+          <span class="grupo-cuenta">1</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-petroleo" data-tabla="1" data-asana="Ardha Matsyendrasana" data-traduccion="Media torsión de Matsyendra" data-beneficio="Mejora movilidad de columna y cintura"><span class="asana-nombre">Ardha Matsyendrasana</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Extensiones</h3>
+          <span class="grupo-sub">Extensiones hacia atrás</span>
+          <span class="grupo-cuenta">6</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-terracota" data-tabla="1" data-asana="Bhujangasana" data-traduccion="Cobra" data-beneficio="Fortalece espalda y abre el pecho"><span class="asana-nombre">Bhujangasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Salabhasana" data-traduccion="Langosta" data-beneficio="Fortalece espalda, glúteos y piernas"><span class="asana-nombre">Salabhasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Dhanurasana" data-traduccion="Arco" data-beneficio="Abre pecho, hombros y parte frontal del cuerpo"><span class="asana-nombre">Dhanurasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Ustrasana" data-traduccion="Camello" data-beneficio="Mejora apertura torácica y movilidad de columna"><span class="asana-nombre">Ustrasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Setu Bandha Sarvangasana" data-traduccion="Puente" data-beneficio="Fortalece piernas y espalda, abre el pecho"><span class="asana-nombre">Setu Bandha Sarvangasana</span></button><button class="asana c-borde-terracota" data-tabla="1" data-asana="Matsyasana" data-traduccion="Pez" data-beneficio="Abre pecho y garganta"><span class="asana-nombre">Matsyasana</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Invertidas</h3>
+          <span class="grupo-sub">Asanas invertidas</span>
+          <span class="grupo-cuenta">4</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-oliva" data-tabla="1" data-asana="Adho Mukha Svanasana" data-traduccion="Perro boca abajo" data-beneficio="Estira espalda y piernas, fortalece brazos"><span class="asana-nombre">Adho Mukha Svanasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Sarvangasana" data-traduccion="Vela" data-beneficio="Trabaja estabilidad, hombros y control corporal"><span class="asana-nombre">Sarvangasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Halasana" data-traduccion="Arado" data-beneficio="Estira espalda y parte posterior del cuerpo"><span class="asana-nombre">Halasana</span></button><button class="asana c-borde-oliva" data-tabla="1" data-asana="Sirsasana" data-traduccion="Postura sobre la cabeza" data-beneficio="Desarrolla fuerza, equilibrio y concentración"><span class="asana-nombre">Sirsasana</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="grupo">
+        <header>
+          <h3>Tumbadas y relajación</h3>
+          <span class="grupo-sub">Descanso, tumbadas y relajación</span>
+          <span class="grupo-cuenta">4</span>
+        </header>
+        <div class="asanas">
+          <button class="asana c-borde-petroleo" data-tabla="1" data-asana="Balasana" data-traduccion="Niño" data-beneficio="Relaja espalda, caderas y respiración"><span class="asana-nombre">Balasana</span></button><button class="asana c-borde-petroleo" data-tabla="1" data-asana="Supta Baddha Konasana" data-traduccion="Ángulo ligado tumbado" data-beneficio="Relaja y abre suavemente las caderas"><span class="asana-nombre">Supta Baddha Konasana</span></button><button class="asana c-borde-petroleo" data-tabla="1" data-asana="Supta Padangusthasana" data-traduccion="Mano al dedo gordo tumbado" data-beneficio="Estira isquiotibiales y piernas"><span class="asana-nombre">Supta Padangusthasana</span></button><button class="asana c-borde-petroleo" data-tabla="1" data-asana="Savasana" data-traduccion="Cadáver" data-beneficio="Facilita descanso físico y mental"><span class="asana-nombre">Savasana</span></button>
+        </div>
+        <p class="asana-ficha" aria-live="polite" hidden></p>
       </article></div>
+    <div class="nombres">
+      <h3>Para entender los nombres</h3>
+      <ul><li><b lang="sa">Ardha</b> medio</li><li><b lang="sa">Baddha</b> atado</li><li><b lang="sa">Parivrtta</b> girado</li><li><b lang="sa">Utthita</b> extendido</li><li><b lang="sa">Supta</b> tumbado</li><li><b lang="sa">Upavistha</b> sentado</li><li><b lang="sa">Parsva</b> lateral</li><li><b lang="sa">Salamba</b> con apoyo</li></ul>
+    </div>
+    <p class="grupo-nota">Traducciones y beneficios revisados por Ver&oacute;nica.</p>
   </section>
   <section id="postura">
     <h2>Tu postura</h2>
@@ -1254,7 +1364,7 @@ try { if (localStorage.getItem('musica') === '1') ponerMusica(true); } catch (e)
 // fallando una por una es lo peor que puede hacer una lista de 67 botones.
 // 04-10-2026: sin contar «pasajes en los textos» (Salvador: sin referencias a libros).
 (function(){
-  document.querySelectorAll('.asana').forEach(b => {
+  document.querySelectorAll('.asana:not([data-tabla])').forEach(b => {
     const hay = buscar('¿Qué es ' + b.dataset.asana + '?').length > 0;
     b.dataset.hay = hay ? 'si' : 'no';
     b.title = hay ? 'Toca y te cuento'
@@ -1262,7 +1372,7 @@ try { if (localStorage.getItem('musica') === '1') ponerMusica(true); } catch (e)
   });
 })();
 
-document.querySelectorAll('.asana').forEach(b => b.onclick = () => {
+document.querySelectorAll('.asana:not([data-tabla])').forEach(b => b.onclick = () => {
   document.querySelectorAll('.asana[aria-current]').forEach(o => o.removeAttribute('aria-current'));
   b.setAttribute('aria-current', 'true');     // no se pierde de vista cual se pregunto
   const nombre = b.dataset.asana;
@@ -1270,6 +1380,20 @@ document.querySelectorAll('.asana').forEach(b => b.onclick = () => {
   destino.scrollIntoView({behavior:'smooth', block:'start'});
   if (window.__aterrizar) window.__aterrizar(destino);
   responder('¿Qué es ' + nombre + '?');
+});
+// 19-10-2026: las de la tabla de Verónica traen su ficha: se abre debajo de su grupo, sin salir
+// de aquí. Tocar otra vez la misma la cierra.
+document.querySelectorAll('.asana[data-tabla]').forEach(b => b.onclick = () => {
+  const ficha = b.closest('.grupo').querySelector('.asana-ficha');
+  const abierta = b.getAttribute('aria-current') === 'true';
+  document.querySelectorAll('.asana[aria-current]').forEach(o => o.removeAttribute('aria-current'));
+  document.querySelectorAll('.asana-ficha').forEach(f => { f.hidden = true; });
+  if (abierta) return;
+  b.setAttribute('aria-current', 'true');
+  const n = document.createElement('b'); n.textContent = b.dataset.asana;
+  const t = document.createElement('span'); t.textContent = b.dataset.traduccion;
+  ficha.replaceChildren(n, t, document.createTextNode(b.dataset.beneficio));
+  ficha.hidden = false;
 });
 document.getElementById('enviar').onclick = () => responder(texto.value.trim());
 texto.addEventListener('keydown', ev => { if (ev.key === 'Enter') responder(texto.value.trim()); });
