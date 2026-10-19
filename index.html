@@ -490,6 +490,24 @@
     .solo-movil{display:block}
     .solo-ordenador{display:none}
   }
+  /* ---- experiencias (19-10-2026, maqueta de Verónica): 2 por fila en el ordenador, 1 en el móvil ---- */
+  .exp-ante{text-transform:uppercase;letter-spacing:.32em;font-size:13px;
+    color:var(--suave);margin:0 0 6px}
+  .exp-rejilla{display:grid;gap:18px;margin:22px 0 0}
+  @media(min-width:760px){.exp-rejilla{grid-template-columns:1fr 1fr}}
+  .exp-tarjeta{background:var(--papel);border:1px solid var(--linea-fina);display:flex;flex-direction:column}
+  .exp-tarjeta img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+  .exp-cuerpo{padding:18px 22px 22px;display:flex;flex-direction:column;flex:1}
+  .exp-cuerpo h3{font-size:28px;color:var(--marino);margin:0 0 6px;font-weight:500}
+  .exp-lema{text-transform:uppercase;letter-spacing:.16em;font-size:12.5px;color:var(--suave);margin:0 0 10px}
+  .exp-cuerpo p{margin:0 0 14px}
+  .exp-mas{margin-top:auto;align-self:flex-start;color:var(--marino);text-decoration:none;
+    border-bottom:1px solid var(--oliva);padding:6px 0 2px;min-height:24px}
+  .exp-mas:hover{border-bottom-color:var(--marino)}
+  .exp-cierre{text-align:center;margin:30px auto 0;max-width:30em}
+  .exp-cierre p{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(22px,2.6vw,27px);
+    line-height:1.4;color:var(--marino);margin:0 0 16px}
+  .exp-cierre .boton-foto{display:inline-block;text-decoration:none;text-transform:uppercase;letter-spacing:.18em;font-size:14px}
   .llevar .boton-foto{width:100%;margin:4px 0 14px}
   .llevar-ya{font-size:17px;color:var(--marino);margin:0 0 14px}
   .llevar-pasos{background:var(--papel);border:1px solid var(--linea-fina);margin:0;
@@ -858,6 +876,59 @@
   </section>
 
 
+  <section id="experiencias">
+    <p class="exp-ante">Experiencias</p>
+    <h2>Grupos · Empresas · Eventos · Baños de Gong</h2>
+    <div class="filete"></div>
+    <p class="lead">El yoga también se comparte. Creo experiencias adaptadas a grupos, equipos y encuentros especiales, combinando movimiento, respiración, meditación y sonido según el contexto y las personas.</p>
+    <div class="exp-rejilla">
+      <article class="exp-tarjeta">
+        <img src="assets/experiencias/grupos.jpg" alt="Grupos" loading="lazy" decoding="async">
+        <div class="exp-cuerpo">
+          <h3>Grupos</h3>
+          <p class="exp-lema">Practicar juntos, conectar desde dentro.</p>
+          <p>Sesiones de yoga para grupos de distintos niveles, diseñadas para trabajar movilidad, fuerza, respiración y presencia en un ambiente cercano y consciente.</p>
+          <a class="exp-mas" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20Grupos." target="_blank" rel="noopener">Saber m&aacute;s <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="exp-tarjeta">
+        <img src="assets/experiencias/empresas.jpg" alt="Empresas" loading="lazy" decoding="async">
+        <div class="exp-cuerpo">
+          <h3>Empresas</h3>
+          <p class="exp-lema">Bienestar que también tiene lugar en el trabajo.</p>
+          <p>Sesiones adaptadas al tiempo, al espacio y a las necesidades de cada equipo, combinando yoga, movilidad, respiración y meditación.</p>
+          <a class="exp-mas" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20Empresas." target="_blank" rel="noopener">Saber m&aacute;s <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="exp-tarjeta">
+        <img src="assets/experiencias/eventos.jpg" alt="Eventos" loading="lazy" decoding="async">
+        <div class="exp-cuerpo">
+          <h3>Eventos</h3>
+          <p class="exp-lema">Momentos creados para parar, compartir y conectar.</p>
+          <p>Propuestas para retiros, encuentros privados, celebraciones y experiencias especiales, con yoga, meditación, respiración y una dimensión gastronómica o de encuentro.</p>
+          <a class="exp-mas" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20Eventos." target="_blank" rel="noopener">Saber m&aacute;s <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="exp-tarjeta">
+        <img src="assets/experiencias/gong.jpg" alt="Baños de Gong" loading="lazy" decoding="async">
+        <div class="exp-cuerpo">
+          <h3>Baños de Gong</h3>
+          <p class="exp-lema">Sonido, vibración y quietud.</p>
+          <p>Una experiencia de escucha profunda que favorece la relajación, la presencia y el descanso. Puede vivirse por sí sola o integrarse en retiros, eventos privados y propuestas para empresas.</p>
+          <a class="exp-mas" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20Ba%C3%B1os%20de%20Gong." target="_blank" rel="noopener">Saber m&aacute;s <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+    </div>
+    <div class="exp-cierre">
+      <p>Si quieres crear una experiencia a medida, estaré encantada de diseñarla contigo.</p>
+      <a class="boton-foto" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20crear%20una%20experiencia%20a%20medida." target="_blank" rel="noopener">Contactar <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+
+
   <section id="secuencia">
     <h2>La secuencia</h2>
     <p class="cursiva">Las asanas del hatha yoga, por grupos.</p>
@@ -1099,6 +1170,7 @@
   <a href="#hablar">Hablarle</a>
   <a href="#preguntar">Preguntar</a>
   <a href="#esterilla">Fotos y vídeos</a>
+  <a href="#experiencias">Experiencias</a>
   <a href="#secuencia">Asanas</a>
   <a href="#postura">Postura</a>
   <a href="#llevatela">Llevártela</a>
