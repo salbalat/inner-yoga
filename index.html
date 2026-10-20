@@ -508,6 +508,8 @@
   .exp-cierre p{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(22px,2.6vw,27px);
     line-height:1.4;color:var(--marino);margin:0 0 16px}
   .exp-cierre .boton-foto{display:inline-block;text-decoration:none;text-transform:uppercase;letter-spacing:.18em;font-size:14px}
+  .gong-video{max-width:360px;margin:18px auto 0}
+  .gong-video video{width:100%;display:block;background:#000}
   .llevar .boton-foto{width:100%;margin:4px 0 14px}
   .llevar-ya{font-size:17px;color:var(--marino);margin:0 0 14px}
   .llevar-pasos{background:var(--papel);border:1px solid var(--linea-fina);margin:0;
@@ -918,13 +920,25 @@
           <h3>Baños de Gong</h3>
           <p class="exp-lema">Sonido, vibración y quietud.</p>
           <p>Una experiencia de escucha profunda que favorece la relajación, la presencia y el descanso. Puede vivirse por sí sola o integrarse en retiros, eventos privados y propuestas para empresas.</p>
-          <a class="exp-mas" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20Ba%C3%B1os%20de%20Gong." target="_blank" rel="noopener">Saber m&aacute;s <span aria-hidden="true">&rarr;</span></a>
+          <a class="exp-mas" href="#gong">Saber m&aacute;s <span aria-hidden="true">&rarr;</span></a>
         </div>
       </article>
     </div>
     <div class="exp-cierre">
       <p>Si quieres crear una experiencia a medida, estaré encantada de diseñarla contigo.</p>
       <a class="boton-foto" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20gustar%C3%ADa%20crear%20una%20experiencia%20a%20medida." target="_blank" rel="noopener">Contactar <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+
+
+  <section id="gong">
+    <h2>Baño de gong: una experiencia para los sentidos</h2>
+    <div class="filete"></div>
+    <p class="lead">El sonido y la vibración del gong envuelven el espacio e invitan a bajar el ritmo. Una experiencia wellness que puede ayudar a aliviar la tensión, favorecer la calma y facilitar un estado de atención meditativa.</p>
+    <div class="gong-video">
+      <video controls playsinline preload="none" poster="assets/gong/gong.jpg"
+             aria-label="V&iacute;deo de Verónica Sukha tocando el gong">
+        <source src="assets/gong/gong.mp4" type="video/mp4"></video>
     </div>
   </section>
 
@@ -937,29 +951,6 @@
     <p class="lead">La práctica equilibrada de asanas implica una combinación armoniosa de diferentes posturas para lograr una salud integral. Cada tipo de asana ofrece beneficios específicos, ya sea estimulantes o relajantes, y es crucial encontrar un equilibrio entre ambas. Esto también depende del objetivo particular de cada sesión de yoga.</p>
     <p class="lead">Toca cualquiera y te cuento sobre ella.</p>
     <div class="grupos">
-      <article class="grupo">
-        <header>
-          <h3>Boca arriba</h3>
-          <span class="grupo-sub">Asanas tumbadas boca arriba</span>
-          <span class="grupo-cuenta">1</span>
-        </header>
-        <div class="asanas">
-          <button class="asana c-borde-petroleo" data-asana="Supta Vajrasana"><span class="asana-nombre">Supta Vajrasana</span></button>
-        </div>
-        
-      </article>
-
-      <article class="grupo">
-        <header>
-          <h3>Invertidas</h3>
-          <span class="grupo-sub">Asanas invertidas</span>
-          <span class="grupo-cuenta">1</span>
-        </header>
-        <div class="asanas">
-          <button class="asana c-borde-terracota" data-asana="Viparita Karani"><span class="asana-nombre">Viparita Karani</span></button>
-        </div>
-        
-      </article>
       <article class="grupo">
         <header>
           <h3>De pie</h3>
@@ -1171,6 +1162,7 @@
   <a href="#preguntar">Preguntar</a>
   <a href="#esterilla">Fotos y vídeos</a>
   <a href="#experiencias">Experiencias</a>
+  <a href="#gong">Ba&ntilde;os de Gong</a>
   <a href="#secuencia">Asanas</a>
   <a href="#postura">Postura</a>
   <a href="#llevatela">Llevártela</a>
