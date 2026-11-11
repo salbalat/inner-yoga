@@ -42,7 +42,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@4.22.0/dist/tf-converter.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@4.22.0/dist/tf-backend-webgl.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@2.1.3/dist/pose-detection.min.js"></script>
-<script defer src="postura.js"></script>
+
 <script defer src="movimiento.js"></script>
 <script defer src="hablar.js"></script>
 <link rel="apple-touch-icon" href="assets/icono.png">
@@ -1052,41 +1052,6 @@
     </div>
     <p class="grupo-nota">Traducciones y beneficios revisados por Ver&oacute;nica.</p>
   </section>
-  <section id="postura">
-    <h2>Tu postura</h2>
-    <p class="cursiva">Haz una foto y mira los &aacute;ngulos.</p>
-    <div class="filete"></div>
-    <p class="lead">Elige la postura, haz la foto y el m&oacute;vil mide los
-       &aacute;ngulos reales de tus articulaciones y los compara con los de
-       referencia. <b>La foto no sale de tu tel&eacute;fono</b>: se mide aqu&iacute;
-       mismo y no se guarda en ning&uacute;n sitio.</p>
-    <div class="postura-mandos">
-      <label class="campo-etiqueta" for="postura-cual">Postura</label>
-      <select id="postura-cual"></select>
-      <label class="boton-foto" for="postura-foto">Hacer o elegir la foto</label>
-      <input id="postura-foto" type="file" accept="image/*" capture="environment" hidden>
-    </div>
-    <p id="postura-encuadre" class="encuadre"></p>
-    <p id="postura-estado" class="estado" role="status" aria-live="polite"></p>
-    <canvas id="postura-lienzo" hidden></canvas>
-    <div id="postura-salida"></div>
-  </section>
-
-  <section id="musica">
-    <h2>M&uacute;sica para practicar</h2>
-    <p class="cursiva">Para acompa&ntilde;ar la pr&aacute;ctica.</p>
-    <div class="filete"></div>
-    <div class="disco-caja">
-      <iframe src="https://open.spotify.com/embed/album/47SrUL3swU3EI5icSpEIXI?utm_source=generator"
-              width="100%" height="380" frameborder="0" loading="lazy"
-              title="Songs from Grace en Spotify"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-    </div>
-    <p class="detalle-musica">Si no se ve el reproductor,
-       <a href="https://open.spotify.com/album/47SrUL3swU3EI5icSpEIXI" target="_blank"
-          rel="noopener">&aacute;brelo en Spotify</a>.</p>
-  </section>
-
   <section id="llevatela">
     <h2>Ll&eacute;vatela en el m&oacute;vil</h2>
     <div class="filete"></div>
@@ -1164,7 +1129,6 @@
   <a href="#experiencias">Experiencias</a>
   <a href="#gong">Ba&ntilde;os de Gong</a>
   <a href="#secuencia">Asanas</a>
-  <a href="#postura">Postura</a>
   <a href="#llevatela">Llevártela</a>
 </nav>
 
@@ -1174,13 +1138,6 @@
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm7-3a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 7 7 0 0 0 6 6.92V21a1 1 0 0 0 2 0v-2.08A7 7 0 0 0 19 12Z"/></svg>
   <span>Hablar</span>
 </button>
-<button id="musica-boton" type="button" aria-expanded="false"
-        aria-controls="musica-panel" aria-label="Poner o quitar la música"
-        title="Poner la música de clase">
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 3 9 5.2v9.3a3.4 3.4 0 1 0 1.8 3V8.4l7.4-1.5v5.4a3.4 3.4 0 1 0 1.8 3V3Z"/></svg>
-  <span>M&uacute;sica</span>
-</button>
-<div id="musica-panel" hidden></div>
 
 <footer>Hatha Yoga · Vinyasa · Pranayama · Meditación<br>Método Interior<br><a href="privacidad.html">Pol&iacute;tica de privacidad</a></footer>
 
@@ -1455,30 +1412,6 @@ document.querySelectorAll('.chip').forEach(c => c.onclick = () => responder(c.te
   indice.hidden = false;
 })();
 
-const botonMusica = document.getElementById('musica-boton');
-const panelMusica = document.getElementById('musica-panel');
-const ALBUM = 'https://open.spotify.com/embed/album/47SrUL3swU3EI5icSpEIXI?utm_source=generator&autoplay=1';
-
-function ponerMusica(abrir){
-  if (abrir && !panelMusica.firstChild) {
-    const marco = document.createElement('iframe');
-    marco.src = ALBUM;
-    marco.title = 'Música de clase';
-    marco.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-    marco.loading = 'lazy';
-    panelMusica.appendChild(marco);
-  }
-  panelMusica.hidden = !abrir;
-  botonMusica.setAttribute('aria-expanded', String(abrir));
-  botonMusica.classList.toggle('sonando', abrir);
-  try { localStorage.setItem('musica', abrir ? '1' : '0'); } catch (e) {}
-}
-
-botonMusica.addEventListener('click', () => ponerMusica(panelMusica.hidden));
-
-// Si la ultima vez la dejo puesta, se le deja el panel abierto y listo para sonar
-// en cuanto toque: no se puede hacer sonar sin que toque, pero si dejarselo a mano.
-try { if (localStorage.getItem('musica') === '1') ponerMusica(true); } catch (e) {}
 
 // Las asanas de la secuencia preguntan al asistente, que esta mas arriba en la pagina.
 // Antes de que nadie toque nada, se marca cuales tienen respuesta: descubrirlo

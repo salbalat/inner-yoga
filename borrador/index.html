@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inner Yoga · Verónica Sukha — vista previa del rediseño</title>
+<!-- 10-11-2026: VISTA PREVIA del rediseño que pidió Verónica (correo «Diseño web nuevo», 10-11, y su PDF
+     «Propuesta de rediseño», 09-10). Textos tal cual de su folleto actualizado (docs/veronica/2026-11-10-…pdf)
+     y de su propuesta. No es la web publicada: los enlaces de «Explora» abren la web actual. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;1,400&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--marfil:#F6F1E7;--arena:#E6D9C3;--arcilla:#A8654A;--arcilla-oscura:#7E4630;--carbon:#2B2724;--gris:#6B635C;--linea:#DDD0BA}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--marfil);color:var(--carbon);font:17px/1.65 Karla,system-ui,sans-serif}
+  a{color:inherit}
+  .aviso-vista{background:var(--carbon);color:var(--marfil);font-size:13px;text-align:center;padding:7px 16px}
+  header{position:sticky;top:0;z-index:5;background:rgba(246,241,231,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--linea)}
+  .barra{max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .marca{font:500 19px/1 "EB Garamond",Georgia,serif;letter-spacing:.14em;text-decoration:none}
+  nav{display:flex;gap:22px;font-size:15px}
+  nav a{text-decoration:none;color:var(--gris)}
+  nav a:hover,nav a:focus-visible{color:var(--carbon)}
+  .menu-movil{display:none}
+  h1,h2,h3{font-family:"EB Garamond",Georgia,serif;font-weight:500;margin:0}
+  h1{font-size:clamp(40px,7vw,76px);line-height:1.02;letter-spacing:-.01em}
+  h2{font-size:clamp(30px,4.4vw,46px);line-height:1.1}
+  .etiqueta{font-size:13px;letter-spacing:.12em;color:var(--arcilla-oscura);margin:0 0 14px}
+  .portada{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden}
+  .portada img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+  .portada::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,39,36,0) 35%,rgba(43,39,36,.72))}
+  .portada .texto{position:relative;z-index:1;max-width:1120px;width:100%;margin:0 auto;padding:0 20px 64px;color:var(--marfil)}
+  .portada p{max-width:30em;font-size:19px;margin:18px 0 28px}
+  .boton{display:inline-block;padding:16px 30px;border-radius:999px;background:var(--arcilla);color:var(--marfil);text-decoration:none;font-weight:500;font-size:17px}
+  .boton:hover{background:var(--arcilla-oscura)}
+  .boton.claro{background:var(--marfil);color:var(--carbon)}
+  section{padding:96px 20px}
+  .ancho{max-width:1120px;margin:0 auto}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .foto-vertical{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+  .lista{list-style:none;padding:0;margin:26px 0 0;border-top:1px solid var(--linea)}
+  .lista li{padding:11px 0;border-bottom:1px solid var(--linea)}
+  .cita{font:italic 400 22px/1.45 "EB Garamond",Georgia,serif;color:var(--gris);margin:28px 0 0}
+  .metodo{background:var(--arena)}
+  .pilares{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+  .pilar{background:var(--marfil);padding:28px 24px;border-top:3px solid var(--arcilla)}
+  .pilar h3{font-size:26px;margin-bottom:8px}
+  .pilar p{margin:0;color:var(--gris)}
+  .modos{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+  .modo{text-decoration:none;display:block}
+  .modo img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;filter:grayscale(1)}
+  .modo span{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font:500 24px "EB Garamond",Georgia,serif}
+  .explora{background:var(--carbon);color:var(--marfil)}
+  .explora .etiqueta{color:var(--arena)}
+  .rejilla{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#4a433e;margin-top:40px}
+  .tesela{background:var(--carbon);padding:28px 24px;text-decoration:none;display:block;min-height:150px}
+  .tesela h3{font-size:24px;margin-bottom:6px}
+  .tesela p{margin:0;color:#BDB2A5;font-size:15px}
+  .tesela:hover{background:#352f2b}
+  .meditaciones{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+  .meditacion{border:1px solid #4a433e;padding:20px}
+  .meditacion b{display:block;font:500 21px "EB Garamond",Georgia,serif}
+  .meditacion small{color:#BDB2A5}
+  .meditacion audio{width:100%;margin-top:12px}
+  .gong{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:center;margin-top:20px;border:1px solid #4a433e;padding:20px}
+  .gong video{width:100%;display:block}
+  .cierre{text-align:center}
+  .cierre h2{margin-bottom:28px}
+  .contacto{background:var(--arena)}
+  .contacto .datos{font-size:20px;line-height:1.9}
+  footer{padding:28px 20px;text-align:center;color:var(--gris);font-size:14px}
+  :focus-visible{outline:2px solid var(--arcilla);outline-offset:3px}
+  @media (max-width:800px){
+    nav{display:none}
+    .menu-movil{display:block;font-size:15px;text-decoration:none;color:var(--gris)}
+    section{padding:64px 18px}
+    .dos,.pilares,.modos,.rejilla,.meditaciones,.gong{grid-template-columns:1fr}
+    .dos{gap:32px}
+    .portada{min-height:82vh}
+    .portada .texto{padding-bottom:44px}
+    .boton{display:block;text-align:center;padding:18px 24px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="aviso-vista">Vista previa del rediseño · todavía no está publicada</div>
+<header>
+  <div class="barra">
+    <a class="marca" href="#inicio">MY INNER YOGA</a>
+    <nav aria-label="Menú">
+      <a href="#metodo">Método</a><a href="#sobre-mi">Sobre mí</a><a href="#practica">Practica conmigo</a><a href="#contacto">Contacto</a>
+    </nav>
+    <a class="menu-movil" href="#contacto">Contacto</a>
+  </div>
+</header>
+
+<main>
+  <div class="portada" id="inicio">
+    <img src="assets/veronica-rio.jpg" alt="Verónica Sukha practicando yoga junto al río">
+    <div class="texto">
+      <p class="etiqueta" style="color:var(--arena)">Inner Yoga · Cuerpo · Mente · Alma</p>
+      <h1>Una práctica<br>para volver a ti.</h1>
+      <p>Yoga, respiración y meditación para conocerte, cultivar presencia y practicar desde quien eres hoy.</p>
+      <a class="boton" href="#practica">Practica conmigo</a>
+    </div>
+  </div>
+
+  <section id="sobre-mi">
+    <div class="ancho dos">
+      <div>
+        <p class="etiqueta">Sobre mí</p>
+        <h2>Soy Verónica Sukha</h2>
+        <p>Más de 30 años de práctica y enseñanza. Una forma personal de acompañar a cada persona según su cuerpo y su momento.</p>
+        <ul class="lista">
+          <li>30 años de experiencia</li>
+          <li>Formación en India</li>
+          <li>Certificación Yoga Alliance</li>
+          <li>Formación en meditación Vipassana</li>
+          <li>Yoga de las escrituras de los Vedas</li>
+        </ul>
+        <p class="cita">«El yoga se vive diferente en cada persona. Por eso, tu práctica también debería ser única.»</p>
+      </div>
+      <img class="foto-vertical" src="assets/foto-6-jardin.jpg" alt="Verónica Sukha en postura con las manos juntas">
+    </div>
+  </section>
+
+  <section class="metodo" id="metodo">
+    <div class="ancho">
+      <p class="etiqueta">Método interior</p>
+      <h2>Cuerpo · Mente · Cuerpo sutil</h2>
+      <p style="max-width:40em">Trabajamos con Hatha Yoga, Vinyasa, Pranayama y prácticas de consciencia para crear una hoja de ruta personal que puedas llevar también fuera de la esterilla.</p>
+      <div class="pilares">
+        <div class="pilar"><h3>Cuerpo</h3><p>Movilidad, fuerza, flexibilidad y consciencia corporal.</p></div>
+        <div class="pilar"><h3>Mente</h3><p>Meditación Vipassana, presencia y gestión del estrés y las emociones.</p></div>
+        <div class="pilar"><h3>Cuerpo sutil</h3><p>Respiración, energía y una experiencia más profunda del ser.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="practica">
+    <div class="ancho">
+      <p class="etiqueta">Practica conmigo</p>
+      <h2>Individual · Grupos · Empresas</h2>
+      <p style="max-width:40em">Sesiones diseñadas según tus objetivos, necesidades y momento vital.</p>
+      <div class="modos">
+        <a class="modo" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20interesan%20las%20sesiones%20individuales"><img src="assets/foto-5-piernas-abiertas.jpg" alt=""><span>Individual <span aria-hidden="true">→</span></span></a>
+        <a class="modo" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20interesan%20las%20clases%20en%20grupo"><img src="assets/exp-grupos.jpg" alt=""><span>Grupos <span aria-hidden="true">→</span></span></a>
+        <a class="modo" href="https://wa.me/34623393496?text=Hola%20Ver%C3%B3nica%2C%20me%20interesa%20el%20yoga%20para%20empresas"><img src="assets/exp-empresas.jpg" alt=""><span>Empresas <span aria-hidden="true">→</span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="explora" id="explora">
+    <div class="ancho">
+      <p class="etiqueta">Explora</p>
+      <h2>Para practicar por tu cuenta</h2>
+      <div class="rejilla">
+        <a class="tesela" href="https://myinneryoga.com/#hablar"><h3>Habla conmigo</h3><p>Pregúntame en voz alta y te contesto con mi voz.</p></a>
+        <a class="tesela" href="https://myinneryoga.com/#metodo"><h3>Respiración · Pranayama</h3><p>Cuando cambia tu respiración, cambia tu estado.</p></a>
+        <a class="tesela" href="https://myinneryoga.com/#secuencia"><h3>Las asanas</h3><p>Las 30 posturas del hatha yoga, por grupos.</p></a>
+        <a class="tesela" href="#meditaciones"><h3>Medita conmigo</h3><p>Dos meditaciones guiadas con mi voz.</p></a>
+        <a class="tesela" href="#gong"><h3>Baños de gong</h3><p>Sonido, vibración y quietud.</p></a>
+        <a class="tesela" href="https://myinneryoga.com/#llevatela"><h3>La app</h3><p>Llévame en el móvil.</p></a>
+      </div>
+      <div id="meditaciones" class="meditaciones">
+        <div class="meditacion"><b>Meditación para soltar</b><small>3 minutos</small><audio controls preload="none" src="assets/soltar.mp3"></audio></div>
+        <div class="meditacion"><b>Meditación para relajar el cuerpo</b><small>5 minutos</small><audio controls preload="none" src="assets/relajar-el-cuerpo.mp3"></audio></div>
+      </div>
+      <div id="gong" class="gong">
+        <video controls playsinline preload="none" poster="assets/gong.jpg" aria-label="Vídeo de Verónica tocando el gong"><source src="assets/gong.mp4" type="video/mp4"></video>
+        <div><h3 style="font-size:26px">Baño de gong</h3><p style="color:#BDB2A5;margin:8px 0 0">Una experiencia para los sentidos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cierre">
+    <div class="ancho">
+      <h2>Tu práctica empieza donde estás.</h2>
+      <a class="boton" href="#practica">Practica conmigo</a>
+    </div>
+  </section>
+
+  <section class="contacto" id="contacto">
+    <div class="ancho">
+      <p class="etiqueta">Contacto</p>
+      <h2>¿Empezamos?</h2>
+      <p class="datos"><a href="tel:+34623393496">623 393 496</a><br><a href="mailto:veronica@myinneryoga.com">veronica@myinneryoga.com</a><br>myinneryoga.com</p>
+    </div>
+  </section>
+</main>
+<footer>My Inner Yoga · Verónica Sukha</footer>
+</body>
+</html>
